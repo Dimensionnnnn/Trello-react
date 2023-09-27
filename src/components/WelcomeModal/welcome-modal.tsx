@@ -16,20 +16,20 @@ export const WelcomeModal: React.FC<Props> = ({onSubmit}) => {
         const formData = new FormData(form);
     
         const name = formData.get('welcome-input') as string;
+        const trimmedName = name.trim();
     
-        if (name.trim().length === 0) {
+        if (!trimmedName) {
             setError('Please enter your name');
             return;
         }
-    
-        console.log(name);
+
         onSubmit(name);
     }
 
     return (
         <div className={styles.modal}>
             <form className={styles.content} onSubmit={handleSubmit}>
-                <Input name='welcome-input' label='Input your name' errorMessage={error}/>
+                <Input name='welcome-input' label='Input your name' error={error}/>
                 <Button type='submit' text='Submit'/>
             </form>
         </div>

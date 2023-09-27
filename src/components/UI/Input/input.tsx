@@ -1,19 +1,20 @@
 import React from 'react';
 import styles from './input.module.scss';
+import classNames from 'classnames';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
     label?: string;
     className?: string;
-    errorMessage?: string;
+    error?: string;
 }
 
-export const Input: React.FC<Props> = ({label, errorMessage, ...props}) => {
-    const combinedClassNames = `${styles.input} ${props.className || ''} ${errorMessage ? styles.errorMessage : ''}`
+export const Input: React.FC<Props> = ({label, error, ...props}) => {
+    const combinedClassNames = classNames(styles.input, props.className, error ? styles.error : '');
     return (
         <div className={styles.container}>
             {label && <label className={styles.label}>{label}</label>}
             <input className={combinedClassNames} {...props}/>
-            {errorMessage && <span className={styles.errorMessage}>{errorMessage}</span>}
+            {error && <span className={styles.error}>{error}</span>}
         </div>
     )
 }
