@@ -1,8 +1,32 @@
+import { useState } from "react";
+import Modal from "./components/Modal/modal";
+import Button from "./components/UI/Button/button";
+import Input from "./components/UI/Input/input";
+
 function App() {
+  const [username, setUsername] = useState('');
+
+  const handleChangeUsername = (name: string) => {
+    setUsername(name);
+  }
+
+  const handleUsernameSubmit = () => {
+    console.log(username);
+  }
+
   return (
     <>
-      <h1>Hello World</h1>
-      <h2>My First React App</h2>
+      <Modal
+        inputProps={{
+          label: "Input your name",
+          value: username,
+          onChange: handleChangeUsername,
+        }}
+        buttonProps={{
+          children: "Submit",
+          onClick: handleUsernameSubmit,
+        }}
+      />
     </>
   );
 }
