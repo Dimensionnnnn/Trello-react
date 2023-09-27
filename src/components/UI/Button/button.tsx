@@ -1,18 +1,14 @@
 import React from 'react'
 import styles from './button.module.scss'
 
-type ButtonType = "button" | "submit" | "reset";
-
-interface Props {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     text: string;
-    type: ButtonType;
-    onClick?: (event: React.FormEvent) => void;
+    className?: string;
 }
 
-const Button: React.FC<Props> = ({text, type, onClick}) => {
+export const Button: React.FC<Props> = ({text, ...props}) => {
+    const combinedClassNames = `${styles.button} ${props.className || ''}`
     return (
-        <button className={styles.button} onClick={onClick} type={type}>{text}</button>
+        <button className={combinedClassNames} {...props}>{text}</button>
     )
 }
-
-export default Button;

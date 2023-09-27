@@ -1,29 +1,21 @@
 import { useState } from "react";
-import WelcomeModal from "./components/WelcomeModal/welcome-modal";
+import { WelcomeModal } from "./components/WelcomeModal/welcome-modal";
+import "./assets/colors.css";
 
 function App() {
   const [username, setUsername] = useState('');
 
-  const handleChangeUsername = (name: string) => {
-    setUsername(name);
-  }
-
-  const handleUsernameSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    console.log(username);
+  const handleUsernameSubmit = (username: string) => {
+    setUsername(username);
   }
 
   return (
     <>
-      <WelcomeModal
-        inputProps={{
-          value: username,
-          onChange: handleChangeUsername,
-        }}
-        buttonProps={{
-          onClick: handleUsernameSubmit,
-        }}
-      />
+      {username ? (
+        <h1>Hello, {username}</h1>
+      ) :
+        <WelcomeModal onSubmit={handleUsernameSubmit}/>
+      }
     </>
   );
 }

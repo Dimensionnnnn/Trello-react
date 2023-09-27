@@ -1,15 +1,13 @@
-@import '../../../app.scss';
-
 .button {
     padding: 5px;
     max-width: 100%;
     width: 100%;
-    border-radius: $button-border-radius;
-    box-shadow: $button-box-shadow;
-    line-height: $button-line-height;
-    background-color: $button-background-color;  
+    border-radius: 3px;
+    box-shadow: 0px 0px 12px -2px var(--color-bshadow);
+    line-height: 1.25;
+    background-color: var(--color-black);  
     text-decoration: none;
-    color: $button-color;
+    color: var(--color-white);
     font-size: 14px;
     letter-spacing: .08em;
     text-transform: uppercase;
@@ -19,7 +17,7 @@
 
     &:focus,
     &:hover {
-        background-color: lighten($button-background-color, 30%);
+        background-color: lighten(#000, 30%);
         scale: 1.03;
     }
 }
