@@ -1,7 +1,5 @@
 import { useState } from "react";
-import Modal from "./components/Modal/modal";
-import Button from "./components/UI/Button/button";
-import Input from "./components/UI/Input/input";
+import WelcomeModal from "./components/WelcomeModal/welcome-modal";
 
 function App() {
   const [username, setUsername] = useState('');
@@ -10,20 +8,19 @@ function App() {
     setUsername(name);
   }
 
-  const handleUsernameSubmit = () => {
+  const handleUsernameSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
     console.log(username);
   }
 
   return (
     <>
-      <Modal
+      <WelcomeModal
         inputProps={{
-          label: "Input your name",
           value: username,
           onChange: handleChangeUsername,
         }}
         buttonProps={{
-          children: "Submit",
           onClick: handleUsernameSubmit,
         }}
       />

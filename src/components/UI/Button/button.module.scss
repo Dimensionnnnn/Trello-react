@@ -1,11 +1,15 @@
+@import '../../../app.scss';
+
 .button {
-    padding: 5px 20px;
-    border-radius: 3px;
-    box-shadow: 0px 0px 12px -2px rgba(0, 0, 0, 0.5);
-    line-height: 1.25;
-    background-color: #000000;  
+    padding: 5px;
+    max-width: 100%;
+    width: 100%;
+    border-radius: $button-border-radius;
+    box-shadow: $button-box-shadow;
+    line-height: $button-line-height;
+    background-color: $button-background-color;  
     text-decoration: none;
-    color: white;
+    color: $button-color;
     font-size: 14px;
     letter-spacing: .08em;
     text-transform: uppercase;
@@ -13,21 +17,9 @@
     transition: background-color .6s ease, scale .6s ease;
     overflow: hidden;
 
-    &:after {
-        content: "";
-        position: absolute;
-        width: 0;
-        height: 0;
-        top: 50%;
-        left: 50%;
-        transform: translate3d(-50%, -50%, 0);
-        background: rgba(white, .1);
-        border-radius: 100%;
-    }
-
     &:focus,
     &:hover {
-        background-color: lighten(#000000, 30%);
+        background-color: lighten($button-background-color, 30%);
         scale: 1.03;
     }
 }
