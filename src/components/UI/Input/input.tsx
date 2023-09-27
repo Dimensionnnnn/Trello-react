@@ -10,7 +10,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 
 export const Input: React.FC<Props> = ({label, error, ...props}) => {
     const combinedClassNames = classNames(styles.input, props.className, {
-        [styles.error]: error
+        [styles.error]: error !== ''
     });
     return (
         <div className={styles.container}>

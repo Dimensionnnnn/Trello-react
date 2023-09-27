@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const WelcomeModal: React.FC<Props> = ({onSubmit}) => {
-    const [error, setError] = useState<string | undefined>(undefined);
+    const [error, setError] = useState('');
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
     
