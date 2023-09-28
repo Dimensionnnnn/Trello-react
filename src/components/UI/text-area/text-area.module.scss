@@ -1,11 +1,4 @@
-.container {
-    overflow: hidden;
-    position: relative;
-}
-
 .textArea {
-    word-wrap: break-word;
-    clear: both;
     overflow: hidden;
     text-decoration: none;
     resize: none;
@@ -15,8 +8,8 @@
 
     width: 100%;
     max-width: 100%;
-    background-color: var(--color-primary-03);
-    color: var(--color-secondary-02);
+    background-color: var(--black-03);
+    color: var(--white-02);
 
     border: none;
     outline: none;

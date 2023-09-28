@@ -1,18 +1,17 @@
-.headerContainer {
+.container {
     position: relative;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 75px;
-    background-color: var(--color-primary-01);
-}
-
-.headerContent {
+    min-height: 75px;
     height: 100%;
+
     display: flex;
+    align-items: center;
     justify-content: flex-end;
 
+    background-color: var(--black-01);
+}
+
+.content {
     padding-right: 100px;
 
-    color: var(--color-secondary-01);
+    color: var(--white-01);
 }

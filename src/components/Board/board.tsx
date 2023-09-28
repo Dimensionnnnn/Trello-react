@@ -1,36 +1,46 @@
-import { Column } from "components/Column/column";
+import { Column } from "components/column/column";
 import React, { useState } from "react";
 import styles from "./board.module.scss";
+import { CardProps } from "components/card/card";
+import { info } from "types/types";
 
 interface Props {
     columnsProps: {
-        id: number,
-        title: string,
+        info: info;
+        cards: CardProps[];
     }[];
 }
 
 export const Board: React.FC<Props> = ({columnsProps}) => {
-    const [columnInfo, setColumnInfo] = useState(columnsProps);
+    const [columns, setColumns] = useState(columnsProps);
 
     const handleColumnTitleChange = (id: number, newTitle: string) => {
-        const updatedColumnTitles = [...columnInfo];
-        updatedColumnTitles[id].title = newTitle;
-        setColumnInfo(updatedColumnTitles);
-    }
+        setColumns((prevColumns) => {
+            const updatedColumns = prevColumns.map((column) => {
+                if (column.info.id === id) {
+                    return {
+                        ...column,
+                        info: { ...column.info, title: newTitle },
+                    };
+                }
+                return column;
+            });
+            return updatedColumns;
+        });
+    };
 
     return (
-        <>
-            <div className={styles.boardContainer}>
-                <div className={styles.boardWrapper}>
-                    {columnInfo.map((column) => (
-                        <Column
-                            key={column.id}
-                            title={column.title}
-                            onTitleChange={(newTitle: string) => handleColumnTitleChange(column.id, newTitle)}
-                        />
-                    ))}
-                </div>
+        <div className={styles.container}>
+            <div className={styles.wrapper}>
+                {columns.map((column) => (
+                    <Column
+                        key={column.info.id}
+                        title={column.info.title}
+                        cards={column.cards}
+                        onTitleChange={(newTitle: string) => handleColumnTitleChange(column.info.id, newTitle)}
+                    />
+                ))}
             </div>
-        </>
+        </div>
     )
 };

@@ -7,10 +7,8 @@ interface Props {
 
 export const Header: React.FC<Props> = ({username}) => {
     return (
-        <>
-            <div className={styles.headerContainer}>
-                <h1 className={styles.headerContent}>{username}</h1>
-            </div>
-        </>
+        <div className={styles.container}>
+            <h1 className={styles.content}>{username}</h1>
+        </div>
     )
 };

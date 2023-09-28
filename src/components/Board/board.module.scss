@@ -1,4 +1,4 @@
-.boardContainer {
+.container {
     display: flex;
     height: 100%;
     position: relative;
@@ -7,7 +7,7 @@
     padding-top: 10px;
 }
 
-.boardWrapper {
+.wrapper {
     overflow-x: auto;
     overflow-y: hidden;
 
@@ -21,6 +21,6 @@
     gap: 40px;
 }
 
-.boardWrapper > :first-child {
+.wrapper > :first-child {
     margin-left: 40px;
 }

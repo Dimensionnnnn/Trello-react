@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { WelcomeModal } from "./components/WelcomeModal/welcome-modal";
-import "./assets/colors.css";
-import { Header } from "components/Header/header";
-import { Board } from "components/Board/board";
+import { useState} from "react";
+import boardData from './boardData.json';
+import { WelcomeModal } from "components/welcome-modal/welcome-modal";
+import { Header } from "components/header/header";
+import { Board } from "components/board/board";
 import styles from "./App.module.scss";
 
 function App() {
@@ -12,32 +12,13 @@ function App() {
     setUsername(username);
   }
 
-  const initialColumns = [
-    {
-      id: 0,
-      title: 'Column1',
-    },
-    {
-      id: 1,
-      title: 'Column2',
-    },
-    {
-      id: 2,
-      title: 'Column3',
-    },
-    {
-      id: 3,
-      title: 'Column4',
-    }
-  ]
-
   return (
     <>
       {username ? (
         <>
           <div className={styles.container}>
             <Header username={username} />
-            <Board columnsProps={initialColumns} />
+            <Board columnsProps={boardData.columns} />
           </div>
         </>
       ) :
