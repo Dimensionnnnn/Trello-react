@@ -4,5 +4,17 @@
     --color-gray: gray;
     --color-red: red;
 
+    --color-primary-01: #030330;
+    --color-primary-02: #080806;
+    --color-primary-03: #22272b;
+
+    --color-secondary-01: #fefcff;
+    --color-secondary-02: #b6c2cf;
+
     --color-bshadow: rgba(0, 0, 0, 0.5);
+}
+
+* {
+    margin: 0;
+    padding: 0;
 }

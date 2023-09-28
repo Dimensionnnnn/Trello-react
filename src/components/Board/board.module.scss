@@ -1,0 +1,26 @@
+.boardContainer {
+    display: flex;
+    height: 100%;
+    position: relative;
+    overflow-y: auto;
+    outline: none;
+    padding-top: 10px;
+}
+
+.boardWrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    white-space: nowrap;
+
+    display: flex;
+    flex-direction: row;
+
+    width: 100%;
+
+    gap: 40px;
+}
+
+.boardWrapper > :first-child {
+    margin-left: 40px;
+}
