@@ -1,5 +1,5 @@
 import { Card } from "components/card/card";
-import { Card as CardType } from "types/types";
+import { Card as ICard } from "types/types";
 import { Button } from "components/UI/button/button";
 import { Input } from "components/UI/input/input";
 import { TextArea } from "components/UI/text-area/text-area";
@@ -7,10 +7,10 @@ import { v4 as uuidv4 } from "uuid";
 import React, { useState } from "react";
 import styles from "./column.module.scss";
 
-export interface CardProps { [id: string]: CardType };
+export interface CardProps { [id: string]: ICard };
 
 interface Props {
-    id: number;
+    id: string;
     title: string;
     cards: CardProps;
     onTitleChange: (newTitle: string) => void;
@@ -27,7 +27,7 @@ export const Column: React.FC<Props> = ({title, onTitleChange, ...props}) => {
 
         if (trimmedCardTitle) {
             const newCardId = uuidv4();
-            const newCard: CardType = {
+            const newCard: ICard = {
                 id: newCardId,
                 columnId: props.id,
                 title: trimmedCardTitle,

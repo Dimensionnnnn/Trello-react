@@ -1,10 +1,10 @@
 import { TextArea } from "components/UI/text-area/text-area";
 import React, { useState } from "react";
 import styles from "./card.module.scss";
-import { Card as CardType } from "types/types";
+import { Card as ICard } from "types/types";
 
 interface Props {
-    card: CardType;
+    card: ICard;
     onTextChange: (newText: string) => void;
 }
 

@@ -1,18 +1,18 @@
 export const columns = {
-    1: {
-        id: 1,
+    "1": {
+        id: "1",
         title: 'To Do',
     },
-    2: {
-        id: 2,
+    "2": {
+        id: "2",
         title: 'In Progress',
     },
-    3: {
-        id: 3,
+    "3": {
+        id: "3",
         title: 'Done',
     },
-    4: {
-        id: 4,
+    "4": {
+        id: "4",
         title: 'Archived',
     }
 }
@@ -20,22 +20,22 @@ export const columns = {
 export const cards = {
     "101": {
         id: "101",
-        columnId: 1,
+        columnId: "1",
         title: "Learn React",
     },
     "102": {
         id: "102",
-        columnId: 1,
+        columnId: "1",
         title: "Learn Redux",
     },
     "201": {
         id: "201",
-        columnId: 2,
+        columnId: "2",
         title: "Learn React",
     },
     "202": {
         id: "202",
-        columnId: 2,
+        columnId: "2",
         title: "Learn Redux",
     }
 }
