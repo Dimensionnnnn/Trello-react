@@ -1,5 +1,4 @@
 import { useState} from "react";
-import boardData from './boardData.json';
 import { WelcomeModal } from "components/welcome-modal/welcome-modal";
 import { Header } from "components/header/header";
 import { Board } from "components/board/board";
@@ -18,7 +17,7 @@ function App() {
         <>
           <div className={styles.container}>
             <Header username={username} />
-            <Board columnsProps={boardData.columns} />
+            <Board />
           </div>
         </>
       ) :

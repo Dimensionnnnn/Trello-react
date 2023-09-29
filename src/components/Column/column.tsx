@@ -7,14 +7,17 @@ import { v4 as uuidv4 } from "uuid";
 import React, { useState } from "react";
 import styles from "./column.module.scss";
 
+export interface CardProps { [id: string]: CardType };
+
 interface Props {
+    id: number;
     title: string;
-    cards: CardType[];
+    cards: CardProps;
     onTitleChange: (newTitle: string) => void;
 }
 
 export const Column: React.FC<Props> = ({title, onTitleChange, ...props}) => {
-    const [cards, setCards] = useState<CardType[]>(props.cards);
+    const [cards, setCards] = useState<CardProps>(props.cards);
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [isAddingCard, setIsAddingCard] = useState(false);
     const [newCardTitle, setNewCardTitle] = useState('');
@@ -23,30 +26,30 @@ export const Column: React.FC<Props> = ({title, onTitleChange, ...props}) => {
         const trimmedCardTitle = newCardTitle.trim();
 
         if (trimmedCardTitle) {
+            const newCardId = uuidv4();
             const newCard: CardType = {
-                id: uuidv4(),
+                id: newCardId,
+                columnId: props.id,
                 title: trimmedCardTitle,
-                comment: ''
             }
 
-            setCards([...cards, newCard]);
+            setCards({...cards, [newCardId]: newCard})
             setNewCardTitle('');
             setIsAddingCard(false);
         }
     }
 
     const handleCardTextChange = (id: string, newTitle: string) => {
-        const updatedCards = cards.map((card) => {
-            if (card.id === id) {
-                return {
-                    ...card,
-                    title: newTitle
-                };
-            }
-            return card;
-        });
+        const updatedCards = {...cards};
 
-        setCards(updatedCards);
+        if (updatedCards[id]) {
+            updatedCards[id] = {
+                ...updatedCards[id],
+                title: newTitle,
+            };
+
+            setCards(updatedCards)
+        }
     }
 
     return (
@@ -64,7 +67,7 @@ export const Column: React.FC<Props> = ({title, onTitleChange, ...props}) => {
                         <h2 className={styles.title} onClick={() => setIsEditingTitle(true)}>{title}</h2>
                     )}
                 </div>
-                {cards.map((card) => (
+                {Object.values(cards).map((card) => (
                     <Card
                         key={card.id}
                         card={{...card}}

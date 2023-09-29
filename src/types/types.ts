@@ -5,6 +5,6 @@ export interface Column {
 
 export interface Card {
     id: string;
+    columnId: number;
     title: string;
-    comment: string;
 }
