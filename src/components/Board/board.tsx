@@ -1,13 +1,13 @@
 import { Column } from "components/column/column";
 import React, { useState } from "react";
 import styles from "./board.module.scss";
-import { CardProps } from "components/card/card";
-import { info } from "types/types";
+import { Card as CardType } from "types/types";
+import { Column as ColumnType } from "types/types";
 
 interface Props {
     columnsProps: {
-        info: info;
-        cards: CardProps[];
+        info: ColumnType;
+        cards: CardType[];
     }[];
 }
 

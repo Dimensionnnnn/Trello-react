@@ -1,19 +1,20 @@
 import { Card } from "components/card/card";
-import { CardProps } from "components/card/card";
+import { Card as CardType } from "types/types";
 import { Button } from "components/UI/button/button";
 import { Input } from "components/UI/input/input";
 import { TextArea } from "components/UI/text-area/text-area";
+import { v4 as uuidv4 } from "uuid";
 import React, { useState } from "react";
 import styles from "./column.module.scss";
 
 interface Props {
     title: string;
-    cards: CardProps[];
+    cards: CardType[];
     onTitleChange: (newTitle: string) => void;
 }
 
 export const Column: React.FC<Props> = ({title, onTitleChange, ...props}) => {
-    const [cards, setCards] = useState<CardProps[]>(props.cards);
+    const [cards, setCards] = useState<CardType[]>(props.cards);
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [isAddingCard, setIsAddingCard] = useState(false);
     const [newCardTitle, setNewCardTitle] = useState('');
@@ -22,9 +23,8 @@ export const Column: React.FC<Props> = ({title, onTitleChange, ...props}) => {
         const trimmedCardTitle = newCardTitle.trim();
 
         if (trimmedCardTitle) {
-            const maxId = Math.max(...cards.map((card) => card.id), 0);
-            const newCard: CardProps = {
-                id: maxId + 1,
+            const newCard: CardType = {
+                id: uuidv4(),
                 title: trimmedCardTitle,
                 comment: ''
             }
@@ -35,12 +35,17 @@ export const Column: React.FC<Props> = ({title, onTitleChange, ...props}) => {
         }
     }
 
-    const handleCardTextChange = (index: number, newTitle: string) => {
-        const updatedCards = [...cards];
-        updatedCards[index] = {
-            ...updatedCards[index],
-            title: newTitle
-        }
+    const handleCardTextChange = (id: string, newTitle: string) => {
+        const updatedCards = cards.map((card) => {
+            if (card.id === id) {
+                return {
+                    ...card,
+                    title: newTitle
+                };
+            }
+            return card;
+        });
+
         setCards(updatedCards);
     }
 
@@ -59,32 +64,32 @@ export const Column: React.FC<Props> = ({title, onTitleChange, ...props}) => {
                         <h2 className={styles.title} onClick={() => setIsEditingTitle(true)}>{title}</h2>
                     )}
                 </div>
-                {cards.map((card, index) => (
+                {cards.map((card) => (
                     <Card
                         key={card.id}
                         card={{...card}}
-                        onTextChange={(newText: string) => handleCardTextChange(index, newText)}
+                        onTextChange={(newText: string) => handleCardTextChange(card.id, newText)}
                     />
                 ))}
-                {!isAddingCard ? (
+                {isAddingCard ? (
+                        <>
+                            <div className={styles.text}>
+                                <TextArea
+                                    value={newCardTitle}
+                                    onChange={(e) => setNewCardTitle(e.target.value)}
+                                />
+                            </div>
+                            <Button
+                                text='Add card'
+                                onClick={handleAddCard}
+                                disabled={!newCardTitle.trim()}
+                            />
+                        </>
+                    ) : (
                     <Button
                         text="Add card"
                         onClick={() => setIsAddingCard(true)}
                     />
-                ) : (
-                    <>
-                        <div className={styles.text}>
-                            <TextArea
-                                value={newCardTitle}
-                                onChange={(e) => setNewCardTitle(e.target.value)}
-                            />
-                        </div>
-                        <Button
-                            text='Add card'
-                            onClick={handleAddCard}
-                            disabled={!newCardTitle.trim()}
-                        />
-                    </>
                 )}
             </div>
         </div>

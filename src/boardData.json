@@ -7,12 +7,12 @@
             },
             "cards": [
                 {
-                    "id": 101,
+                    "id": "101",
                     "title": "Learn React",
                     "comment": "Try hard!"
                 },
                 {
-                    "id": 102,
+                    "id": "102",
                     "title": "Learn Redux",
                     "comment": "Try harder!"
                 }
@@ -25,12 +25,12 @@
             },
             "cards": [
                 {
-                    "id": 201,
+                    "id": "201",
                     "title": "Learn React",
                     "comment": "Try harder!"
                 },
                 {
-                    "id": 202,
+                    "id": "202",
                     "title": "Learn Redux",
                     "comment": "Try harder!"
                 }
