@@ -1,7 +1,8 @@
 import { TextArea } from "components/UI/text-area/text-area";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./card.module.scss";
 import { Card as ICard } from "types/types";
+import { useFocusAndSelect } from "hooks/useFocusAndSelect";
 
 interface Props {
     card: ICard;
@@ -15,15 +16,7 @@ export const Card: React.FC<Props> = ({card, isOpen, onTextChange, onOpen, onClo
     const [isEditing, setIsEditing] = useState(false);
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-    useEffect(() => {
-        if (isOpen && textAreaRef.current) {
-            textAreaRef.current.focus();
-            textAreaRef.current.setSelectionRange(
-                card.title.length,
-                card.title.length
-            )
-        }
-    }, [isOpen, card.title]);
+    useFocusAndSelect({ref: textAreaRef, condition: isOpen, value: card.title});
 
     const handleClick = (e: React.MouseEvent) => {
         if (!isEditing) {
@@ -58,32 +51,11 @@ export const Card: React.FC<Props> = ({card, isOpen, onTextChange, onOpen, onClo
                     ref={textAreaRef}
                     value={card.title}
                     onChange={(e) => onTextChange(e.target.value)}
-                    onBlur={handleBlur}
+                    onBlur={() => handleBlur}
                     onKeyDown={handleKeyDown}
                 />
             ) : (
-                <div className={styles.card} onClick={handleClick}>
-                    {card.title}
-                </div>
-            )}
-        </div>
-    );
-    onTextChange: (newText: string) => void;
-}
-
-export const Card: React.FC<Props> = ({card, onTextChange}) => {
-    const [isEditing, setIsEditing] = useState(false);
-
-    return (
-        <div className={styles.container}>
-            {isEditing ? (
-                <TextArea
-                    value={card.title}
-                    onChange={(e) => onTextChange(e.target.value)}
-                    onBlur={() => setIsEditing(false)}
-                />
-            ) : (
-                <div className={styles.card} onClick={() => setIsEditing(true)}>{card.title}</div>
+                <div className={styles.card} onClick={handleClick}>{card.title}</div>
             )}
         </div>
     )
