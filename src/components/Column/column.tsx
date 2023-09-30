@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Card } from "components/card/card";
 import { Card as ICard } from "types/types";
 import { Button } from "components/UI/button/button";
@@ -7,14 +6,12 @@ import { TextArea } from "components/UI/text-area/text-area";
 import { v4 as uuidv4 } from "uuid";
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./column.module.scss";
-=======
 import { Card as ICard } from "types/types";
 import React from "react";
 import styles from "./column.module.scss";
 import { CardList } from "./card-list";
 import { CardAdd } from "./card-add";
 import { TitleEdit } from "components/UI/title-edit/title-edit";
->>>>>>> develop
 
 export interface CardProps { [id: string]: ICard };
 
@@ -23,7 +20,6 @@ interface Props {
     title: string;
     cards: CardProps;
     onTitleChange: (newTitle: string) => void;
-<<<<<<< HEAD
 }
 
 export const Column: React.FC<Props> = ({title, onTitleChange, ...props}) => {
@@ -88,20 +84,17 @@ export const Column: React.FC<Props> = ({title, onTitleChange, ...props}) => {
         e.preventDefault();
         handleAddCard();
     }
-=======
     onAddCard: (newCard: ICard) => void;
     onCardTextChange: (id: string, newTitle: string) => void;
 }
 
 export const Column: React.FC<Props> = ({...props}) => {
     const { id, title, cards, onTitleChange, onAddCard, onCardTextChange } = props;
->>>>>>> develop
 
     return (
         <div className={styles.container}>
             <div className={styles.wrapper}>
                 <div className={styles.header}>
-<<<<<<< HEAD
                     {isEditingTitle ? (
                         <Input
                             type='text'
@@ -146,12 +139,10 @@ export const Column: React.FC<Props> = ({...props}) => {
                         onClick={handleAddCardClick}
                     />
                 )}
-=======
                     <TitleEdit title={title} onTitleChange={onTitleChange}/>
                 </div>
                 <CardList cards={cards} onCardTextChange={onCardTextChange}/>
                 <CardAdd onAddCard={onAddCard} columnId={id}/>
->>>>>>> develop
             </div>
         </div>
     )
