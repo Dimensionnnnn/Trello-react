@@ -35,10 +35,7 @@ export const Card: React.FC<Props> = ({card, isOpen, onTextChange, onOpen, onClo
     }
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === "Enter") {
-            setIsEditing(false);
-            onClose();
-        } else if (e.key === "Escape") {
+        if (e.key === "Enter" || e.key === "Escape") {
             setIsEditing(false);
             onClose();
         }
