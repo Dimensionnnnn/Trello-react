@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Button } from "components/UI/button/button";
 import { TextArea } from "components/UI/text-area/text-area";

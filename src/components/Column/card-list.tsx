@@ -9,6 +9,30 @@ interface Props {
 
 export const CardList: React.FC<Props> = ({ cards, onCardTextChange }) => {
     const [openItemId, setOpenItemId] = useState<string | null>(null);
+    const [isEditing, setIsEditing] = useState(false);
+    const [popupActive, setPopupActive] = useState(false);
+
+    const handleClick = (e: React.MouseEvent, cardId: string) => {
+        console.log(cardId)
+        if (!isEditing) {
+            const isClickInside = e.target === e.currentTarget;
+            if (isClickInside) {
+                setOpenItemId(cardId)
+            }
+        }
+    }
+
+    const handleBlur = () => {
+        setIsEditing(false);
+        setOpenItemId(null)
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === "Enter" || e.key === "Escape") {
+            setIsEditing(false);
+            setOpenItemId(null)
+        }
+    }
 
     return (
         <>
@@ -17,9 +41,13 @@ export const CardList: React.FC<Props> = ({ cards, onCardTextChange }) => {
                     key={card.id}
                     card={card}
                     isOpen={openItemId === card.id}
+                    isEditing={isEditing}
                     onTextChange={(newText: string) => onCardTextChange(card.id, newText)}
-                    onOpen={() => setOpenItemId(card.id)}
-                    onClose={() => setOpenItemId(null)}
+                    onBlur={() => handleBlur()}
+                    onKeyDown={(e: React.KeyboardEvent) => handleKeyDown(e)}
+                    onClick={(e: React.MouseEvent, cardId: string) => handleClick(e, cardId)}
+                    isPopupOpen={popupActive}
+                    onPopupOpen={setPopupActive}
                 />
             ))}
         </>
