@@ -1,20 +1,19 @@
 import React, { useState } from "react";
-import { Input } from "components/UI/input/input";
-import styles from "./column.module.scss";
+import styles from "./title-edit.module.scss";
+import { TextArea } from "components/UI/text-area/text-area";
 
 interface Props { 
     title: string;
     onTitleChange: (newTitle: string) => void;
 }
 
-export const ColumnTitleEdit: React.FC<Props> = ({title, onTitleChange}) => {
+export const TitleEdit: React.FC<Props> = ({title, onTitleChange}) => {
     const [isEditingTitle, setIsEditingTitle] = useState(false);
 
     return (
-        <div className={styles.header}>
+        <>
             {isEditingTitle ? (
-                <Input
-                    type='text'
+                <TextArea
                     value={title}
                     onChange={(e) => onTitleChange(e.target.value)}
                     onBlur={() => setIsEditingTitle(false)}
@@ -22,6 +21,6 @@ export const ColumnTitleEdit: React.FC<Props> = ({title, onTitleChange}) => {
             ): (
                 <h2 className={styles.title} onClick={() => setIsEditingTitle(true)}>{title}</h2>
             )}
-        </div>
+        </>
     )
 }

@@ -1,9 +1,9 @@
 import { Card as ICard } from "types/types";
 import React from "react";
 import styles from "./column.module.scss";
-import { ColumnTitleEdit } from "./column-title-edit";
 import { CardList } from "./card-list";
 import { CardAdd } from "./card-add";
+import { TitleEdit } from "components/UI/title-edit/title-edit";
 
 export interface CardProps { [id: string]: ICard };
 
@@ -22,7 +22,9 @@ export const Column: React.FC<Props> = ({...props}) => {
     return (
         <div className={styles.container}>
             <div className={styles.wrapper}>
-                <ColumnTitleEdit title={title} onTitleChange={onTitleChange}/>
+                <div className={styles.header}>
+                    <TitleEdit title={title} onTitleChange={onTitleChange}/>
+                </div>
                 <CardList cards={cards} onCardTextChange={onCardTextChange}/>
                 <CardAdd onAddCard={onAddCard} columnId={id}/>
             </div>
