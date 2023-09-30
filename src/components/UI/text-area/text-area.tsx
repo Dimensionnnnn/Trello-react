@@ -1,4 +1,5 @@
 import React, {forwardRef} from 'react'
+import React from 'react'
 import styles from './text-area.module.scss'
 import classNames from 'classnames';
 
@@ -12,3 +13,9 @@ export const TextArea = forwardRef<HTMLTextAreaElement, Props>((props, ref) => {
         <textarea ref={ref} className={combinedClassNames} {...props}/>
     )
 })
+export const TextArea: React.FC<Props> = ({...props}) => {
+    const combinedClassNames = classNames(styles.textArea, props.className || '')
+    return (
+        <textarea className={combinedClassNames} {...props}/>
+    )
+}
