@@ -30,6 +30,7 @@ export const Card: React.FC<Props> = ({card, isOpen, onTextChange, onOpen, onClo
     }
 
     const handleBlur = () => {
+        console.log(2)
         setIsEditing(false);
         onClose();
     }
@@ -48,7 +49,7 @@ export const Card: React.FC<Props> = ({card, isOpen, onTextChange, onOpen, onClo
                     ref={textAreaRef}
                     value={card.title}
                     onChange={(e) => onTextChange(e.target.value)}
-                    onBlur={() => handleBlur}
+                    onBlur={handleBlur}
                     onKeyDown={handleKeyDown}
                 />
             ) : (
