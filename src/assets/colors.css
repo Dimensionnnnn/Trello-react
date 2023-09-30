@@ -1,8 +1,15 @@
 :root {
-    --color-white: #fff;
-    --color-black: #000;
-    --color-gray: gray;
-    --color-red: red;
+    --gray: gray;
+    --red: red;
+    
+    --black: #000;
+    --black-01: #030330;
+    --black-02: #080806;
+    --black-03: #22272b;
+    
+    --white: #fff;
+    --white-01: #fefcff;
+    --white-02: #b6c2cf;
 
-    --color-bshadow: rgba(0, 0, 0, 0.5);
+    --bshadow-01: rgba(0, 0, 0, 0.5);
 }

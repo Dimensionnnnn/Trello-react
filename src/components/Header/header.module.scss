@@ -1,0 +1,17 @@
+.container {
+    position: relative;
+    min-height: 75px;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    background-color: var(--black-01);
+}
+
+.content {
+    padding-right: 100px;
+
+    color: var(--white-01);
+}

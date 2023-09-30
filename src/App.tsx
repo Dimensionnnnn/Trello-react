@@ -1,6 +1,8 @@
-import { useState } from "react";
-import { WelcomeModal } from "./components/WelcomeModal/welcome-modal";
-import "./assets/colors.css";
+import { useState} from "react";
+import { WelcomeModal } from "components/welcome-modal/welcome-modal";
+import { Header } from "components/header/header";
+import { Board } from "components/board/board";
+import styles from "./App.module.scss";
 
 function App() {
   const [username, setUsername] = useState('');
@@ -12,7 +14,12 @@ function App() {
   return (
     <>
       {username ? (
-        <h1>Hello, {username}</h1>
+        <>
+          <div className={styles.container}>
+            <Header username={username} />
+            <Board />
+          </div>
+        </>
       ) :
         <WelcomeModal onSubmit={handleUsernameSubmit}/>
       }

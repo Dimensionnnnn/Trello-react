@@ -1,6 +1,6 @@
 import styles from './welcome-modal.module.scss';
-import { Input } from '../UI/Input/input';
-import { Button } from '../UI/Button/button';
+import { Input } from 'components/UI/input/input';
+import { Button } from 'components/UI/button/button';
 import { useState } from 'react';
 
 interface Props {
