@@ -1,53 +1,38 @@
-import React, { useState, useRef, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+import React, { useState, useRef } from "react";
 import { Button } from "components/UI/button/button";
 import { TextArea } from "components/UI/text-area/text-area";
-import { Card as ICard } from "types/types";
 import styles from "./column.module.scss";
 import { useFocusAndSelect } from "hooks/useFocusAndSelect";
 
 interface Props {
     columnId: string;
-    onAddCard: (newCard: ICard) => void;
+    onAddCard: (newCardTitle: string, columnId: string) => void;
 }
 
 export const CardAdd: React.FC<Props> = ({ columnId, onAddCard }) => {
     const [isAddingCard, setIsAddingCard] = useState(false);
     const [newCardTitle, setNewCardTitle] = useState('');
+    const trimmedCardTitle = newCardTitle.trim();
 
     const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
     useFocusAndSelect({ref: textAreaRef, condition: isAddingCard, value: newCardTitle});
 
     const handleAddCard = () => {
-        const trimmedCardTitle = newCardTitle.trim();
-
         if (trimmedCardTitle) {
-            const newCardId = uuidv4();
-            const newCard: ICard = {
-                id: newCardId,
-                columnId: columnId,
-                title: trimmedCardTitle,
-            }
-
-            onAddCard(newCard);
+            onAddCard(trimmedCardTitle, columnId);
             setNewCardTitle('');
             setIsAddingCard(false);
         }
     }
 
-    const handleAddCardBlur = () => {
+    const handleBlur = () => {
         setIsAddingCard(false);
     }
 
-    const handleAddCardClick = () => {
+    const handleAddingCardClick = () => {
         setIsAddingCard(true);
         setNewCardTitle('');
-    }
-
-    const handleAddCardMousedown = (e: React.MouseEvent) => {
-        e.preventDefault();
-        handleAddCard();
     }
 
     return (
@@ -58,21 +43,21 @@ export const CardAdd: React.FC<Props> = ({ columnId, onAddCard }) => {
                             <TextArea
                                 value={newCardTitle}
                                 onChange={(e) => setNewCardTitle(e.target.value)}
-                                onBlur={handleAddCardBlur}
+                                onBlur={handleBlur}
                                 ref={textAreaRef}
                                 placeholder="Enter a new card title..."
                             />
                     </div>
                     <Button
-                                text='Add card'
-                                onMouseDown={handleAddCardMousedown}
-                                disabled={!newCardTitle.trim()}
+                        text='Add card'
+                        onMouseDown={handleAddCard}
+                        disabled={!trimmedCardTitle}
                     />
                 </>
             ) : (
                 <Button
                     text="Add card"
-                    onClick={handleAddCardClick}
+                    onClick={handleAddingCardClick}
                 />
             )}
         </>

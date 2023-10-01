@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import styles from "./title-edit.module.scss";
 import { TextArea } from "components/UI/text-area/text-area";
 import { useFocusAndSelect } from "hooks/useFocusAndSelect";

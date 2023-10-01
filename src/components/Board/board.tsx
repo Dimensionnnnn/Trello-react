@@ -5,10 +5,14 @@ import { columns as columnsData, cards as cardsData , comments } from "data/data
 import { CardProps } from "components/column/column";
 import { Card as ICard } from "types/types";
 import { Column as IColumn } from "types/types";
+import { PopupCard } from "components/popup-card/popup-card";
+import { v4 as uuidv4 } from "uuid";
 
 export const Board: React.FC = () => {
     const [columns, setColumns] = useState<Record<string, IColumn>>(columnsData);
-    const [cards, setCards] = useState<Record<string, ICard>>(cardsData); 
+    const [cards, setCards] = useState<Record<string, ICard>>(cardsData);
+
+    const [activeCardIdPopup, setActiveCardIdPopup] = useState<string | null>(null);
 
     const getInitialCardsToCurrentColumn = (columnId: string) => {
         return Object.values(cards).reduce((acc: CardProps, card: ICard) => {
@@ -25,7 +29,13 @@ export const Board: React.FC = () => {
         setColumns(columnsCopy);
     };
 
-    const handleAddCard = (newCard: ICard) => {
+    const handleAddCard = (newCardTitle: string, columnId: string) => {
+        const newCard: ICard = {
+            id: uuidv4(),
+            columnId: columnId,
+            title: newCardTitle,
+        }
+
         const updatedCards = {...cards};
         updatedCards[newCard.id] = newCard;
         setCards(updatedCards);
@@ -35,6 +45,12 @@ export const Board: React.FC = () => {
         const updatedCards = {...cards};
         updatedCards[id].title = newTitle;
         setCards(updatedCards);
+    }
+
+    const getCardById = (cardId: string | null) => {
+        if (cardId) {
+            return cards[cardId];
+        }
     }
 
     return (
@@ -47,11 +63,13 @@ export const Board: React.FC = () => {
                         title={column.title}
                         cards={getInitialCardsToCurrentColumn(column.id)}
                         onTitleChange={(newTitle: string) => handleColumnTitleChange(column.id, newTitle)}
-                        onAddCard={(newCard: ICard) => handleAddCard(newCard)}
+                        onAddCard={(newCardTitle: string, columnId: string) => handleAddCard(newCardTitle, columnId)}
                         onCardTextChange={handleCardTextChange}
+                        onCardClick={setActiveCardIdPopup}
                     />
                 ))}
             </div>
+            <PopupCard isOpen={!!activeCardIdPopup} onClose={() => {setActiveCardIdPopup(null)}} card={getCardById(activeCardIdPopup)}/>
         </div>
     )
 };
