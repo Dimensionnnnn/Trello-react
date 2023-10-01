@@ -3,25 +3,25 @@ import classNames from "classnames";
 import styles from './popup.module.scss';
 
 interface Props {
-    isActive: boolean;
-    setActive: (active: boolean) => void;
+    isOpen: boolean;
+    onClose: () => void;
     children?: React.ReactNode;
     popupBackgroundClass?: string;
     popupContentClass?: string;
 }
 
-export const Popup: React.FC<Props> = ({isActive, setActive, children, ...props}) => {
+export const Popup: React.FC<Props> = ({isOpen, onClose, children, ...props}) => {
     const backgroundClasses = classNames(styles.modal, props?.popupBackgroundClass, {
-        [styles.active]: isActive
+        [styles.active]: isOpen
     })
 
     const contentClasses = classNames(styles.content, props?.popupContentClass, {
-        [styles.active]: isActive
+        [styles.active]: isOpen
     })
 
     return (
         <div className={styles.container}>
-            <div className={backgroundClasses} onClick={() => setActive(false)}/>
+            <div className={backgroundClasses} onClick={onClose}/>
             <div className={contentClasses}>
                 {children}
             </div>

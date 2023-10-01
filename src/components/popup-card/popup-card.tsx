@@ -10,8 +10,8 @@ interface Props {
 export const PopupCard: React.FC<Props> = ({isOpen, onClose, card}) => {
     return (
         <Popup
-            isActive={isOpen}
-            setActive={onClose}
+            isOpen={isOpen}
+            onClose={onClose}
         >
             <div>{card?.title}</div>
         </Popup>
