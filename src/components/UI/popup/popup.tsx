@@ -9,12 +9,12 @@ interface Props {
     className?: string;
 }
 
-export const Popup: React.FC<Props> = ({isOpen, onClose, children, ...props}) => {
+export const Popup: React.FC<Props> = ({isOpen, onClose, children, className}) => {
     const backgroundClasses = classNames(styles.modal, {
         [styles.active]: isOpen
     })
 
-    const contentClasses = classNames(styles.content, props?.className, {
+    const contentClasses = classNames(styles.content, className, {
         [styles.active]: isOpen
     })
 
