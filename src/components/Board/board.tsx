@@ -51,7 +51,6 @@ export const Board: React.FC = () => {
         if (cardId) {
             return cards[cardId];
         }
-        return undefined;
     }
 
     return (
@@ -70,7 +69,7 @@ export const Board: React.FC = () => {
                     />
                 ))}
             </div>
-            <PopupCard cardId={activeCardIdPopup} setActive={setActiveCardIdPopup} getCardById={getCardById}/>
+            <PopupCard activeCardId={activeCardIdPopup} closePopup={setActiveCardIdPopup} card={getCardById(activeCardIdPopup)}/>
         </div>
     )
 };

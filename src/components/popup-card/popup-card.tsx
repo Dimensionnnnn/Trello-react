@@ -2,21 +2,19 @@ import { Popup } from "components/UI/popup/popup"
 import { Card } from "types/types";
 
 interface Props {
-    cardId: string | null;
-    setActive: (cardId: string | null) => void;
-    getCardById: (cardId: string | null) => Card | undefined;
+    activeCardId: string | null;
+    closePopup: (cardId: string | null) => void;
+    card: Card | undefined;
 }
 
-export const PopupCard: React.FC<Props> = ({cardId, setActive, getCardById}) => {
-    const card = getCardById(cardId);
-
+export const PopupCard: React.FC<Props> = ({activeCardId, closePopup, card}) => {
     const handleClose = () => {
-        setActive(null);
+        closePopup(null);
     }
 
     return (
         <Popup
-            isActive={!!cardId}
+            isActive={!!activeCardId}
             setActive={handleClose}
         >
             <div>{card?.title}</div>
