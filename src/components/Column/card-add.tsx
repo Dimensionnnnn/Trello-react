@@ -12,14 +12,13 @@ interface Props {
 export const CardAdd: React.FC<Props> = ({ columnId, onAddCard }) => {
     const [isAddingCard, setIsAddingCard] = useState(false);
     const [newCardTitle, setNewCardTitle] = useState('');
+    const trimmedCardTitle = newCardTitle.trim();
 
     const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
     useFocusAndSelect({ref: textAreaRef, condition: isAddingCard, value: newCardTitle});
 
     const handleAddCard = () => {
-        const trimmedCardTitle = newCardTitle.trim();
-
         if (trimmedCardTitle) {
             onAddCard(trimmedCardTitle, columnId);
             setNewCardTitle('');
@@ -27,18 +26,13 @@ export const CardAdd: React.FC<Props> = ({ columnId, onAddCard }) => {
         }
     }
 
-    const handleAddCardBlur = () => {
+    const handleBlur = () => {
         setIsAddingCard(false);
     }
 
-    const handleAddCardClick = () => {
+    const handleAddingCardClick = () => {
         setIsAddingCard(true);
         setNewCardTitle('');
-    }
-
-    const handleAddCardMousedown = (e: React.MouseEvent) => {
-        e.preventDefault();
-        handleAddCard();
     }
 
     return (
@@ -49,21 +43,21 @@ export const CardAdd: React.FC<Props> = ({ columnId, onAddCard }) => {
                             <TextArea
                                 value={newCardTitle}
                                 onChange={(e) => setNewCardTitle(e.target.value)}
-                                onBlur={handleAddCardBlur}
+                                onBlur={handleBlur}
                                 ref={textAreaRef}
                                 placeholder="Enter a new card title..."
                             />
                     </div>
                     <Button
                         text='Add card'
-                        onMouseDown={handleAddCardMousedown}
-                        disabled={!newCardTitle.trim()}
+                        onMouseDown={handleAddCard}
+                        disabled={!trimmedCardTitle}
                     />
                 </>
             ) : (
                 <Button
                     text="Add card"
-                    onClick={handleAddCardClick}
+                    onClick={handleAddingCardClick}
                 />
             )}
         </>

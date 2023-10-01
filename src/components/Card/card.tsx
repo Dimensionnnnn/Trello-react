@@ -12,7 +12,7 @@ interface Props {
     onBlur: () => void;
     onKeyDown: (e: React.KeyboardEvent) => void;
     onClick: (e: React.MouseEvent, cardId: string) => void;
-    onCardClick: (card: ICard) => void;
+    onCardClick: (cardId: string | null) => void;
 }
 
 export const Card: React.FC<Props> = ({ card, isOpen, isEditing, onTextChange, onBlur, onKeyDown, onClick, onCardClick }) => {
@@ -21,10 +21,8 @@ export const Card: React.FC<Props> = ({ card, isOpen, isEditing, onTextChange, o
     useFocusAndSelect({ref: textAreaRef, condition: isOpen, value: card.title});
 
     return (
-        <>
-            <div className={styles.container}>
-                <div className={styles.card} onClick={() => onCardClick(card)}>{card.title}</div>
-            </div>
-        </>
+        <div className={styles.container}>
+            <div className={styles.card} onClick={() => onCardClick(card.id)}>{card.title}</div>
+        </div>
     )
 };

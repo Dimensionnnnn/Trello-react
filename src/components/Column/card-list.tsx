@@ -5,7 +5,7 @@ import { Card as ICard } from "types/types";
 interface Props {
     cards: Record<string, ICard>;
     onCardTextChange: (id: string, newTitle: string) => void;
-    onCardClick: (card: ICard) => void;
+    onCardClick: (cardId: string | null) => void;
 }
 
 export const CardList: React.FC<Props> = ({ cards, onCardTextChange, onCardClick }) => {

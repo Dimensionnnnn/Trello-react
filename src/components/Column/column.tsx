@@ -14,7 +14,7 @@ interface Props {
     onTitleChange: (newTitle: string) => void;
     onAddCard: (newCardTitle: string, columnId: string) => void;
     onCardTextChange: (id: string, newTitle: string) => void;
-    onCardClick: (card: ICard) => void;
+    onCardClick: (cardId: string | null) => void;
 }
 
 export const Column: React.FC<Props> = ({...props}) => {

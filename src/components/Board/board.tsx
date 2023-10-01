@@ -12,8 +12,7 @@ export const Board: React.FC = () => {
     const [columns, setColumns] = useState<Record<string, IColumn>>(columnsData);
     const [cards, setCards] = useState<Record<string, ICard>>(cardsData);
 
-    const [popupActive, setPopupActive] = useState(false);
-    const [activeCard, setActiveCard] = useState<ICard>();
+    const [activeCardIdPopup, setActiveCardIdPopup] = useState<string | null>(null);
 
     const getInitialCardsToCurrentColumn = (columnId: string) => {
         return Object.values(cards).reduce((acc: CardProps, card: ICard) => {
@@ -48,9 +47,11 @@ export const Board: React.FC = () => {
         setCards(updatedCards);
     }
 
-    const handlePopupOpen = (card: ICard) => {
-        setActiveCard(card);
-        setPopupActive(true);
+    const getCardById = (cardId: string | null) => {
+        if (cardId) {
+            return cards[cardId];
+        }
+        return undefined;
     }
 
     return (
@@ -65,11 +66,11 @@ export const Board: React.FC = () => {
                         onTitleChange={(newTitle: string) => handleColumnTitleChange(column.id, newTitle)}
                         onAddCard={(newCardTitle: string, columnId: string) => handleAddCard(newCardTitle, columnId)}
                         onCardTextChange={handleCardTextChange}
-                        onCardClick={handlePopupOpen}
+                        onCardClick={setActiveCardIdPopup}
                     />
                 ))}
             </div>
-            <PopupCard card={activeCard} isActive={popupActive} setActive={setPopupActive}/>
+            <PopupCard cardId={activeCardIdPopup} setActive={setActiveCardIdPopup} getCardById={getCardById}/>
         </div>
     )
 };

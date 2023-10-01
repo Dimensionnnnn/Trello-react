@@ -11,23 +11,18 @@ interface Props {
 }
 
 export const Popup: React.FC<Props> = ({isActive, setActive, children, ...props}) => {
-    const backgroundClass = classNames(styles.modal, props?.popupBackgroundClass, {
+    const backgroundClasses = classNames(styles.modal, props?.popupBackgroundClass, {
         [styles.active]: isActive
     })
 
-    const contentClass = classNames(styles.content, props?.popupContentClass, {
+    const contentClasses = classNames(styles.content, props?.popupContentClass, {
         [styles.active]: isActive
     })
 
-    const handleBackgroundClick = (e: React.MouseEvent) => {
-        if (e.target === e.currentTarget) {
-            setActive(false);
-        }
-    }
-    
     return (
-        <div className={backgroundClass} onClick= {handleBackgroundClick}>
-            <div className={contentClass}>
+        <div className={styles.container}>
+            <div className={backgroundClasses} onClick={() => setActive(false)}/>
+            <div className={contentClasses}>
                 {children}
             </div>
         </div>
