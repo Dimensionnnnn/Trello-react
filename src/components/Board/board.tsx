@@ -34,6 +34,7 @@ export const Board: React.FC = () => {
             id: uuidv4(),
             columnId: columnId,
             title: newCardTitle,
+            description: "",
         }
 
         const updatedCards = {...cards};
@@ -41,10 +42,26 @@ export const Board: React.FC = () => {
         setCards(updatedCards);
     }
 
-    const handleCardTextChange = (id: string, newTitle: string) => {
+    const handleDeleteCard = (cardId: string) => {
         const updatedCards = {...cards};
-        updatedCards[id].title = newTitle;
+        delete updatedCards[cardId];
         setCards(updatedCards);
+    }
+
+    const handleCardTextChange = (id: string | undefined, newTitle: string | undefined) => {
+        if (id && newTitle) {
+            const updatedCards = {...cards};
+            updatedCards[id].title = newTitle;
+            setCards(updatedCards);
+        }
+    }
+
+    const handleCardDescriptionChange = (id: string | undefined, newDescription: string | undefined) => {
+        if (id && newDescription) {
+            const updatedCards = {...cards};
+            updatedCards[id].description = newDescription;
+            setCards(updatedCards);
+        }
     }
 
     const getCardById = (cardId: string | null) => {
@@ -64,12 +81,19 @@ export const Board: React.FC = () => {
                         cards={getInitialCardsToCurrentColumn(column.id)}
                         onTitleChange={(newTitle: string) => handleColumnTitleChange(column.id, newTitle)}
                         onAddCard={(newCardTitle: string, columnId: string) => handleAddCard(newCardTitle, columnId)}
+                        onDeleteCard={handleDeleteCard}
                         onCardTextChange={handleCardTextChange}
                         onCardClick={setActiveCardIdPopup}
                     />
                 ))}
             </div>
-            <PopupCard isOpen={!!activeCardIdPopup} onClose={() => {setActiveCardIdPopup(null)}} card={getCardById(activeCardIdPopup)}/>
+            <PopupCard
+                isOpen={!!activeCardIdPopup}
+                onClose={() => {setActiveCardIdPopup(null)}}
+                card={getCardById(activeCardIdPopup)}
+                onCardTextChange={handleCardTextChange}
+                onDescriptionChange={handleCardDescriptionChange}
+            />
         </div>
-    )
+    );
 };

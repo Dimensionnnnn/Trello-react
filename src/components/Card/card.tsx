@@ -3,26 +3,67 @@ import React, { useRef, useState } from "react";
 import styles from "./card.module.scss";
 import { Card as ICard } from "types/types";
 import { useFocusAndSelect } from "hooks/useFocusAndSelect";
+import { Button } from "components/UI/button/button";
 
 interface Props {
     card: ICard;
-    isOpen: boolean;
-    isEditing: boolean;
     onTextChange: (newText: string) => void;
-    onBlur: () => void;
-    onKeyDown: (e: React.KeyboardEvent) => void;
-    onClick: (e: React.MouseEvent, cardId: string) => void;
     onCardClick: (cardId: string | null) => void;
+    onDeleteCard: (cardId: string) => void;
 }
 
-export const Card: React.FC<Props> = ({ card, isOpen, isEditing, onTextChange, onBlur, onKeyDown, onClick, onCardClick }) => {
+export const Card: React.FC<Props> = ({
+    card,
+    onTextChange,
+    onCardClick,
+    onDeleteCard,
+}) => {
+    const [activeCardIdEditing, setActiveCardIdEditing] = useState<string | null>(null);
+
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-    useFocusAndSelect({ref: textAreaRef, condition: isOpen, value: card.title});
+    useFocusAndSelect({
+        ref: textAreaRef,
+        condition: activeCardIdEditing === card.id,
+        value: card.title,
+    });
+
+    const handleBlur = () => {
+        setActiveCardIdEditing(null);
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === "Enter" || e.key === "Escape") {
+            setActiveCardIdEditing(null);
+        }
+    };
 
     return (
         <div className={styles.container}>
-            <div className={styles.card} onClick={() => onCardClick(card.id)}>{card.title}</div>
+            {activeCardIdEditing ? (
+                <TextArea
+                    key={card.id}
+                    ref={textAreaRef}
+                    value={card.title}
+                    onChange={(e) => onTextChange(e.target.value)}
+                    onBlur={handleBlur}
+                    onKeyDown={handleKeyDown}
+                />
+            ) : (
+                <>
+                    <div className={styles.card} onClick={() => onCardClick(card.id)}>
+                        {card.title}
+                    </div>
+                    <Button
+                        text="Edit"
+                        onClick={() => setActiveCardIdEditing(card.id)}
+                    />
+                    <Button
+                        text="Delete"
+                        onClick={() => onDeleteCard(card.id)}
+                    />
+                </>
+            )}
         </div>
-    )
+    );
 };

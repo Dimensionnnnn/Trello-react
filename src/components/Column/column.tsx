@@ -5,7 +5,9 @@ import { CardList } from "./card-list";
 import { CardAdd } from "./card-add";
 import { TitleEdit } from "components/UI/title-edit/title-edit";
 
-export interface CardProps { [id: string]: ICard };
+export interface CardProps {
+    [id: string]: ICard;
+}
 
 interface Props {
     id: string;
@@ -13,22 +15,39 @@ interface Props {
     cards: CardProps;
     onTitleChange: (newTitle: string) => void;
     onAddCard: (newCardTitle: string, columnId: string) => void;
+    onDeleteCard: (cardId: string) => void;
     onCardTextChange: (id: string, newTitle: string) => void;
     onCardClick: (cardId: string | null) => void;
 }
 
-export const Column: React.FC<Props> = ({...props}) => {
-    const { id, title, cards, onTitleChange, onAddCard, onCardTextChange, onCardClick } = props;
+export const Column: React.FC<Props> = ({ ...props }) => {
+    const {
+        id,
+        title,
+        cards,
+        onTitleChange,
+        onAddCard,
+        onDeleteCard,
+        onCardTextChange,
+        onCardClick,
+    } = props;
 
     return (
         <div className={styles.container}>
             <div className={styles.wrapper}>
                 <div className={styles.header}>
-                    <TitleEdit title={title} onTitleChange={onTitleChange}/>
+                    <TitleEdit title={title} onTitleChange={onTitleChange} />
                 </div>
-                <CardList cards={cards} onCardTextChange={onCardTextChange} onCardClick={onCardClick}/>
-                <CardAdd onAddCard={onAddCard} columnId={id}/>
+                <div className={styles.cards}>
+                    <CardList
+                        cards={cards}
+                        onCardTextChange={onCardTextChange}
+                        onCardClick={onCardClick}
+                        onDeleteCard={onDeleteCard}
+                    />
+                </div>
+                <CardAdd onAddCard={onAddCard} columnId={id} />
             </div>
         </div>
-    )
+    );
 };
