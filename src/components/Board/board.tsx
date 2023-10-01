@@ -69,7 +69,7 @@ export const Board: React.FC = () => {
                     />
                 ))}
             </div>
-            <PopupCard activeCardId={activeCardIdPopup} closePopup={setActiveCardIdPopup} card={getCardById(activeCardIdPopup)}/>
+            <PopupCard isOpen={!!activeCardIdPopup} onClose={() => {setActiveCardIdPopup(null)}} card={getCardById(activeCardIdPopup)}/>
         </div>
     )
 };
