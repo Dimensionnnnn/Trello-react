@@ -5,15 +5,14 @@ import { Card as ICard } from "types/types";
 interface Props {
     cards: Record<string, ICard>;
     onCardTextChange: (id: string, newTitle: string) => void;
+    onCardClick: (card: ICard) => void;
 }
 
-export const CardList: React.FC<Props> = ({ cards, onCardTextChange }) => {
+export const CardList: React.FC<Props> = ({ cards, onCardTextChange, onCardClick }) => {
     const [openItemId, setOpenItemId] = useState<string | null>(null);
     const [isEditing, setIsEditing] = useState(false);
-    const [popupActive, setPopupActive] = useState(false);
 
     const handleClick = (e: React.MouseEvent, cardId: string) => {
-        console.log(cardId)
         if (!isEditing) {
             const isClickInside = e.target === e.currentTarget;
             if (isClickInside) {
@@ -46,8 +45,7 @@ export const CardList: React.FC<Props> = ({ cards, onCardTextChange }) => {
                     onBlur={() => handleBlur()}
                     onKeyDown={(e: React.KeyboardEvent) => handleKeyDown(e)}
                     onClick={(e: React.MouseEvent, cardId: string) => handleClick(e, cardId)}
-                    isPopupOpen={popupActive}
-                    onPopupOpen={setPopupActive}
+                    onCardClick={onCardClick}
                 />
             ))}
         </>

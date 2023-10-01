@@ -6,20 +6,28 @@ interface Props {
     isActive: boolean;
     setActive: (active: boolean) => void;
     children?: React.ReactNode;
+    popupBackgroundClass?: string;
+    popupContentClass?: string;
 }
 
-export const Popup: React.FC<Props> = ({isActive, setActive, children}) => {
-    const modalClasses = classNames(styles.modal, {
+export const Popup: React.FC<Props> = ({isActive, setActive, children, ...props}) => {
+    const backgroundClass = classNames(styles.modal, props?.popupBackgroundClass, {
         [styles.active]: isActive
     })
 
-    const contentClasses = classNames(styles.content, {
+    const contentClass = classNames(styles.content, props?.popupContentClass, {
         [styles.active]: isActive
     })
+
+    const handleBackgroundClick = (e: React.MouseEvent) => {
+        if (e.target === e.currentTarget) {
+            setActive(false);
+        }
+    }
     
     return (
-        <div className={modalClasses} onClick={() => setActive(false)}>
-            <div className={contentClasses} onClick={(e) => e.stopPropagation()}>
+        <div className={backgroundClass} onClick= {handleBackgroundClick}>
+            <div className={contentClass}>
                 {children}
             </div>
         </div>

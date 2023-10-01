@@ -1,14 +1,12 @@
 import React, { useState, useRef } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { Button } from "components/UI/button/button";
 import { TextArea } from "components/UI/text-area/text-area";
-import { Card as ICard } from "types/types";
 import styles from "./column.module.scss";
 import { useFocusAndSelect } from "hooks/useFocusAndSelect";
 
 interface Props {
     columnId: string;
-    onAddCard: (newCard: ICard) => void;
+    onAddCard: (newCardTitle: string, columnId: string) => void;
 }
 
 export const CardAdd: React.FC<Props> = ({ columnId, onAddCard }) => {
@@ -23,14 +21,7 @@ export const CardAdd: React.FC<Props> = ({ columnId, onAddCard }) => {
         const trimmedCardTitle = newCardTitle.trim();
 
         if (trimmedCardTitle) {
-            const newCardId = uuidv4();
-            const newCard: ICard = {
-                id: newCardId,
-                columnId: columnId,
-                title: trimmedCardTitle,
-            }
-
-            onAddCard(newCard);
+            onAddCard(trimmedCardTitle, columnId);
             setNewCardTitle('');
             setIsAddingCard(false);
         }
@@ -64,9 +55,9 @@ export const CardAdd: React.FC<Props> = ({ columnId, onAddCard }) => {
                             />
                     </div>
                     <Button
-                                text='Add card'
-                                onMouseDown={handleAddCardMousedown}
-                                disabled={!newCardTitle.trim()}
+                        text='Add card'
+                        onMouseDown={handleAddCardMousedown}
+                        disabled={!newCardTitle.trim()}
                     />
                 </>
             ) : (

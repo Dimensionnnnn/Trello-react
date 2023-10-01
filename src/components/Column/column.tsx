@@ -12,12 +12,13 @@ interface Props {
     title: string;
     cards: CardProps;
     onTitleChange: (newTitle: string) => void;
-    onAddCard: (newCard: ICard) => void;
+    onAddCard: (newCardTitle: string, columnId: string) => void;
     onCardTextChange: (id: string, newTitle: string) => void;
+    onCardClick: (card: ICard) => void;
 }
 
 export const Column: React.FC<Props> = ({...props}) => {
-    const { id, title, cards, onTitleChange, onAddCard, onCardTextChange } = props;
+    const { id, title, cards, onTitleChange, onAddCard, onCardTextChange, onCardClick } = props;
 
     return (
         <div className={styles.container}>
@@ -25,7 +26,7 @@ export const Column: React.FC<Props> = ({...props}) => {
                 <div className={styles.header}>
                     <TitleEdit title={title} onTitleChange={onTitleChange}/>
                 </div>
-                <CardList cards={cards} onCardTextChange={onCardTextChange}/>
+                <CardList cards={cards} onCardTextChange={onCardTextChange} onCardClick={onCardClick}/>
                 <CardAdd onAddCard={onAddCard} columnId={id}/>
             </div>
         </div>
