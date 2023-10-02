@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useEffect, useState} from "react";
 import { WelcomeModal } from "components/welcome-modal/welcome-modal";
 import { Header } from "components/header/header";
 import { Board } from "components/board/board";
@@ -9,7 +9,15 @@ function App() {
 
   const handleUsernameSubmit = (username: string) => {
     setUsername(username);
+    localStorage.setItem('username', username);
   }
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername && !username) {
+      setUsername(storedUsername);
+    }
+  }, [username]);
 
   return (
     <>

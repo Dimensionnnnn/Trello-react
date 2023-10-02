@@ -1,5 +1,5 @@
 import { Column } from "components/column/column";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./board.module.scss";
 import { columns as columnsData, cards as cardsData , comments as commentsData } from "data/data";
 import { CardProps } from "components/column/column";
@@ -21,6 +21,30 @@ export const Board: React.FC<Props> = ({username}) => {
 
     const [activeCardIdPopup, setActiveCardIdPopup] = useState<string | null>(null);
 
+    useEffect(() => {
+        const storedColumns = localStorage.getItem('columns');
+        const storedCards = localStorage.getItem('cards');
+        const storedComments = localStorage.getItem('comments');
+
+        if (storedColumns) {
+            setColumns(JSON.parse(storedColumns));
+        } else {
+            setColumns(columnsData);
+        }
+
+        if (storedCards) {
+            setCards(JSON.parse(storedCards));
+        } else {
+            setCards(cardsData);
+        }
+
+        if (storedComments) {
+            setComments(JSON.parse(storedComments));
+        } else {
+            setComments(commentsData);
+        }
+    }, [])
+
     const getInitialCardsToCurrentColumn = (columnId: string) => {
         return Object.values(cards).reduce((acc: CardProps, card: ICard) => {
             if (card.columnId === columnId) {
@@ -30,10 +54,25 @@ export const Board: React.FC<Props> = ({username}) => {
         }, {});
     }
 
+    const updateColumns = (newColumns: Record<string, IColumn>) => {
+        setColumns(newColumns);
+        localStorage.setItem('columns', JSON.stringify(newColumns));
+    }
+
+    const updateCards = (newCards: Record<string, ICard>) => {
+        setCards(newCards);
+        localStorage.setItem('cards', JSON.stringify(newCards));
+    }
+
+    const updateComments = (newComments: Record<string, IComment>) => {
+        setComments(newComments);
+        localStorage.setItem('comments', JSON.stringify(newComments));
+    }
+
     const handleColumnTitleChange = (id: string, newTitle: string) => {
         const columnsCopy = {...columns};
         columnsCopy[id].title = newTitle;
-        setColumns(columnsCopy);
+        updateColumns(columnsCopy);
     };
 
     const handleAddCard = (newCardTitle: string, columnId: string) => {
@@ -46,20 +85,20 @@ export const Board: React.FC<Props> = ({username}) => {
 
         const updatedCards = {...cards};
         updatedCards[newCard.id] = newCard;
-        setCards(updatedCards);
+        updateCards(updatedCards);
     }
 
     const handleDeleteCard = (cardId: string) => {
         const updatedCards = {...cards};
         delete updatedCards[cardId];
-        setCards(updatedCards);
+        updateCards(updatedCards);
     }
 
     const handleCardTextChange = (id?: string, newTitle?: string) => {
         if (id && newTitle) {
             const updatedCards = {...cards};
             updatedCards[id].title = newTitle;
-            setCards(updatedCards);
+            updateCards(updatedCards);
         }
     }
 
@@ -67,7 +106,7 @@ export const Board: React.FC<Props> = ({username}) => {
         if (id && newDescription) {
             const updatedCards = {...cards};
             updatedCards[id].description = newDescription;
-            setCards(updatedCards);
+            updateCards(updatedCards);
         }
     }
 
@@ -97,7 +136,7 @@ export const Board: React.FC<Props> = ({username}) => {
     
             const updatedComments = {...comments};
             updatedComments[newComment.id] = newComment;
-            setComments(updatedComments);
+            updateComments(updatedComments);
         }
     }
 
@@ -105,7 +144,7 @@ export const Board: React.FC<Props> = ({username}) => {
         if (commentId) {
             const updatedComments = {...comments};
             delete updatedComments[commentId];
-            setComments(updatedComments);
+            updateComments(updatedComments);
         }
     }
 
@@ -113,7 +152,7 @@ export const Board: React.FC<Props> = ({username}) => {
         if (id && newDescription) {
             const updatedComments = {...comments};
             updatedComments[id].description = newDescription;
-            setComments(updatedComments);
+            updateComments(updatedComments);
         }
     }
 
