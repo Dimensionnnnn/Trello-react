@@ -20,17 +20,14 @@ interface Props {
     onCardClick: (cardId: string | null) => void;
 }
 
-export const Column: React.FC<Props> = ({ ...props }) => {
-    const {
-        id,
-        title,
-        cards,
-        onTitleChange,
-        onAddCard,
-        onDeleteCard,
-        onCardTextChange,
-        onCardClick,
-    } = props;
+export const Column: React.FC<Props> = ({ id,
+    title,
+    cards,
+    onTitleChange,
+    onAddCard,
+    onDeleteCard,
+    onCardTextChange,
+    onCardClick }) => {
 
     return (
         <div className={styles.container}>
@@ -38,6 +35,7 @@ export const Column: React.FC<Props> = ({ ...props }) => {
                 <div className={styles.header}>
                     <TitleEdit title={title} onTitleChange={onTitleChange} />
                 </div>
+
                 <div className={styles.cards}>
                     <CardList
                         cards={cards}
@@ -46,6 +44,7 @@ export const Column: React.FC<Props> = ({ ...props }) => {
                         onDeleteCard={onDeleteCard}
                     />
                 </div>
+
                 <CardAdd onAddCard={onAddCard} columnId={id} />
             </div>
         </div>

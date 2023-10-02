@@ -29,6 +29,7 @@ export const PopupCard: React.FC<Props> = ({isOpen, onClose, card, onCardTextCha
                 onClose={() => setActiveCardTitleIdEditing(undefined)}
                 onClick={() => setActiveCardTitleIdEditing(card?.id)}
             />
+
             <p>Описание</p>
             <EditableText
                 value={card?.description}
@@ -37,6 +38,7 @@ export const PopupCard: React.FC<Props> = ({isOpen, onClose, card, onCardTextCha
                 onClose={() => setActiveCardDescriptionIdEditing(undefined)}
                 onClick={() => setActiveCardDescriptionIdEditing(card?.id)}
             />
+
             <Button
                 text="Закрыть"
                 onClick={onClose}
