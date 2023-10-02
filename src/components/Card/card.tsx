@@ -4,6 +4,8 @@ import styles from "./card.module.scss";
 import { Card as ICard } from "types/types";
 import { useFocusAndSelect } from "hooks/useFocusAndSelect";
 import { Button } from "components/UI/button/button";
+import { EditSvg } from "shared/icons/components/edit-svg";
+import DeleteSvg from "shared/icons/components/delete-svg";
 
 interface Props {
     card: ICard;
@@ -54,14 +56,18 @@ export const Card: React.FC<Props> = ({
                     <div className={styles.card} onClick={() => onCardClick(card.id)}>
                         {card.title}
                     </div>
+
                     <Button
-                        text="Edit"
                         onClick={() => setActiveCardIdEditing(card.id)}
-                    />
+                    >
+                        <EditSvg />
+                    </Button>
+
                     <Button
-                        text="Delete"
                         onClick={() => onDeleteCard(card.id)}
-                    />
+                    >
+                        <DeleteSvg />
+                    </Button>
                 </>
             )}
         </div>

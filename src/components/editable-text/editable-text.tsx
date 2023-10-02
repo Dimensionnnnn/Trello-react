@@ -4,13 +4,11 @@ import React, { useRef } from 'react';
 
 interface Props {
     value?: string;
-    isEditing: boolean;
-    onChange: (value: string | undefined) => void;
-    onClose: () => void;
-    onClick: () => void;
+    onChange: (value?: string ) => void;
 }
 
-export const EditableText: React.FC<Props> = ({value, isEditing, onChange, onClose, onClick}) => {
+export const EditableText: React.FC<Props> = ({value, onChange }) => {
+    const [isEditing, setIsEditing] = React.useState(false);
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
     useFocusAndSelect({
@@ -21,8 +19,16 @@ export const EditableText: React.FC<Props> = ({value, isEditing, onChange, onClo
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === "Enter" || e.key === "Escape") {
-            onClose();
+            onClose()
         }
+    }
+
+    const onClick = () => {
+        setIsEditing(true);
+    }
+
+    const onClose = () => {
+        setIsEditing(false);
     }
 
     return (

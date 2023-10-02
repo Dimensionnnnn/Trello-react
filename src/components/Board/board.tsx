@@ -48,7 +48,7 @@ export const Board: React.FC = () => {
         setCards(updatedCards);
     }
 
-    const handleCardTextChange = (id: string | undefined, newTitle: string | undefined) => {
+    const handleCardTextChange = (id?: string, newTitle?: string) => {
         if (id && newTitle) {
             const updatedCards = {...cards};
             updatedCards[id].title = newTitle;
@@ -56,7 +56,7 @@ export const Board: React.FC = () => {
         }
     }
 
-    const handleCardDescriptionChange = (id: string | undefined, newDescription: string | undefined) => {
+    const handleCardDescriptionChange = (id?: string, newDescription?: string) => {
         if (id && newDescription) {
             const updatedCards = {...cards};
             updatedCards[id].description = newDescription;

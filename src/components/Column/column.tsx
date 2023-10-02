@@ -1,8 +1,8 @@
 import { Card as ICard } from "types/types";
 import React from "react";
 import styles from "./column.module.scss";
-import { CardList } from "./card-list";
-import { CardAdd } from "./card-add";
+import { CardList } from "../card-list/card-list";
+import { CardAdd } from "../card-add/card-add";
 import { TitleEdit } from "components/UI/title-edit/title-edit";
 
 export interface CardProps {
@@ -20,15 +20,16 @@ interface Props {
     onCardClick: (cardId: string | null) => void;
 }
 
-export const Column: React.FC<Props> = ({ id,
+export const Column: React.FC<Props> = ({
+    id,
     title,
     cards,
     onTitleChange,
     onAddCard,
     onDeleteCard,
     onCardTextChange,
-    onCardClick }) => {
-
+    onCardClick,
+}) => {
     return (
         <div className={styles.container}>
             <div className={styles.wrapper}>
