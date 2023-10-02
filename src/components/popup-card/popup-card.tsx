@@ -2,8 +2,8 @@ import { Popup } from "components/UI/popup/popup"
 import { useFocusAndSelect } from "hooks/useFocusAndSelect";
 import { useRef, useState } from "react";
 import { Card } from "types/types";
-import { TextArea } from "components/UI/text-area/text-area";
 import { Button } from "components/UI/button/button";
+import { EditableText } from "components/editable-text/editable-text";
 
 interface Props {
     isOpen: boolean;
@@ -32,57 +32,26 @@ export const PopupCard: React.FC<Props> = ({isOpen, onClose, card, onCardTextCha
         value: card?.description,
     })
 
-    const handleTitleBlur = () => {
-        setActiveCardTitleIdEditing(undefined);
-    }
-
-    const handleDescriptionBlur = () => {
-        setActiveCardDescriptionIdEditing(undefined);
-    }
-
-    const handleTitleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === "Enter" || e.key === "Escape") {
-            setActiveCardTitleIdEditing(undefined);
-        }
-    };
-
-    const handleDescriptionKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === "Enter" || e.key === "Escape") {
-            setActiveCardDescriptionIdEditing(undefined);
-        }
-    }
-
     return (
         <Popup
             isOpen={isOpen}
             onClose={onClose}
         >
-            {activeCardTitleIdEditing ? (
-                <TextArea
-                    key={card?.id}
-                    ref={textAreaTitleRef}
-                    value={card?.title}
-                    onChange={() => onCardTextChange(card?.id, textAreaTitleRef.current?.value)}
-                    onBlur={handleTitleBlur}
-                    onKeyDown={handleTitleKeyDown}
-                />
-            ) : (
-                <div onClick={() => setActiveCardTitleIdEditing(card?.id)}>{card?.title}</div>
-            )}
+            <EditableText
+                value={card?.title}
+                isEditing={activeCardTitleIdEditing === card?.id}
+                onChange={(value) => onCardTextChange(card?.id, value)}
+                onClose={() => setActiveCardTitleIdEditing(undefined)}
+                onClick={() => setActiveCardTitleIdEditing(card?.id)}
+            />
             <p>Описание</p>
-            {activeCardDescriptionIdEditing ? (
-                <TextArea
-                    ref={textAreaDescriptionRef}
-                    value={card?.description}
-                    onChange={() => onDescriptionChange(card?.id, textAreaDescriptionRef.current?.value)}
-                    onBlur={handleDescriptionBlur}
-                    onKeyDown={handleDescriptionKeyDown}
-                />
-            ) : (
-                <div onClick={() => setActiveCardDescriptionIdEditing(card?.id)}>
-                    {card?.description ? card?.description : "Добавьте описание"}
-                </div>
-            )}
+            <EditableText
+                value={card?.description}
+                isEditing={activeCardDescriptionIdEditing === card?.id}
+                onChange={(value) => onDescriptionChange(card?.id, value)}
+                onClose={() => setActiveCardDescriptionIdEditing(undefined)}
+                onClick={() => setActiveCardDescriptionIdEditing(card?.id)}
+            />
             <Button
                 text="Закрыть"
                 onClick={onClose}
