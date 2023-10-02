@@ -30,7 +30,7 @@ export const WelcomeModal: React.FC<Props> = ({onSubmit}) => {
         <div className={styles.modal}>
             <form className={styles.content} onSubmit={handleSubmit}>
                 <Input name='welcome-input' label='Input your name' error={error}/>
-                <Button type='submit' text='Submit'/>
+                <Button type='submit'>Submit</Button>
             </form>
         </div>
     )

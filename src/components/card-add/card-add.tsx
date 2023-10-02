@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Button } from "components/UI/button/button";
 import { TextArea } from "components/UI/text-area/text-area";
-import styles from "./column.module.scss";
+import styles from "./card-add.module.scss";
 import { useFocusAndSelect } from "hooks/useFocusAndSelect";
 
 interface Props {
@@ -35,6 +35,15 @@ export const CardAdd: React.FC<Props> = ({ columnId, onAddCard }) => {
         setNewCardTitle('');
     }
 
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === "Escape") {
+            setIsAddingCard(false);
+        } else if (e.key === "Enter") {
+            handleAddCard();
+            setIsAddingCard(false);
+        }
+    }
+
     return (
         <>
             {isAddingCard ? (
@@ -44,21 +53,25 @@ export const CardAdd: React.FC<Props> = ({ columnId, onAddCard }) => {
                                 value={newCardTitle}
                                 onChange={(e) => setNewCardTitle(e.target.value)}
                                 onBlur={handleBlur}
+                                onKeyDown={handleKeyDown}
                                 ref={textAreaRef}
                                 placeholder="Enter a new card title..."
                             />
                     </div>
+
                     <Button
-                        text='Add card'
                         onMouseDown={handleAddCard}
                         disabled={!trimmedCardTitle}
-                    />
+                    >
+                        Add card
+                    </Button>
                 </>
             ) : (
                 <Button
-                    text="Add card"
                     onClick={handleAddingCardClick}
-                />
+                >
+                    Add card
+                </Button>
             )}
         </>
     )

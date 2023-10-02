@@ -3,13 +3,13 @@ import styles from './button.module.scss'
 import classNames from 'classnames'
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    text: string;
+    children?: React.ReactNode;
     className?: string;
 }
 
-export const Button: React.FC<Props> = ({text, ...props}) => {
+export const Button: React.FC<Props> = ({ children, ...props}) => {
     const combinedClassNames = classNames(styles.button, props.className || '')
     return (
-        <button className={combinedClassNames} {...props}>{text}</button>
+        <button className={combinedClassNames} {...props}>{children}</button>
     )
 }

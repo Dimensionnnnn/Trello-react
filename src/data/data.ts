@@ -22,21 +22,25 @@ export const cards = {
         id: "101",
         columnId: "1",
         title: "Learn React",
+        description: "Try hard!",
     },
     "102": {
         id: "102",
         columnId: "1",
         title: "Learn Redux",
+        description: "Try harder!",
     },
     "201": {
         id: "201",
         columnId: "2",
         title: "Learn React",
+        description: "Try hard!",
     },
     "202": {
         id: "202",
         columnId: "2",
         title: "Learn Redux",
+        description: "Try harder!",
     }
 }
 

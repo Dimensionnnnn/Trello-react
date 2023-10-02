@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const Popup: React.FC<Props> = ({isOpen, onClose, children, className}) => {
-    const backgroundClasses = classNames(styles.modal, {
+    const containerClasses = classNames(styles.container, {
         [styles.active]: isOpen
     })
 
@@ -19,8 +19,8 @@ export const Popup: React.FC<Props> = ({isOpen, onClose, children, className}) =
     })
 
     return (
-        <div className={styles.container}>
-            <div className={backgroundClasses} onClick={onClose}/>
+        <div className={containerClasses}>
+            <div className={styles.modal} onClick={onClose}/>
             <div className={contentClasses}>
                 {children}
             </div>
