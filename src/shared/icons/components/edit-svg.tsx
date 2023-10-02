@@ -1,11 +1,10 @@
-import * as React from "react";
 import { SVGProps } from "react";
-export const SVGEdit = (props: SVGProps<SVGSVGElement>) => (
+export const SvgEdit = (props: SVGProps<SVGSVGElement>) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlSpace="preserve"
-        width={64}
-        height={64}
+        width={16}
+        height={16}
         fill="#b6c2cf"
         stroke="#b6c2cf"
         viewBox="0 0 494.936 494.936"

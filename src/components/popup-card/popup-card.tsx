@@ -3,6 +3,8 @@ import { } from "hooks/useFocusAndSelect";
 import { Card } from "types/types";
 import { Button } from "components/UI/button/button";
 import { EditableText } from "components/editable-text/editable-text";
+import { SvgClose } from "shared/icons/components/close-svg";
+import styles from "./popup-card.module.scss";
 
 interface Props {
     isOpen: boolean;
@@ -25,15 +27,17 @@ export const PopupCard: React.FC<Props> = ({isOpen, onClose, card, onCardTextCha
                 onChange={(value) => onCardTextChange(card?.id, value)}
             />
 
-            <p>Описание</p>
+            <h3>Описание</h3>
             <EditableText
                 value={card?.description}
                 onChange={(value) => onDescriptionChange(card?.id, value)}
             />
 
-            <Button onClick={onClose}>
-                Закрыть
-            </Button>
+            <div className={styles.close}>
+                <Button onClick={onClose}>
+                    <SvgClose />
+                </Button>
+            </div>
         </Popup>
     )
 }

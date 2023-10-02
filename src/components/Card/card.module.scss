@@ -5,6 +5,8 @@
     margin: 0 0 4px;
     overflow: hidden;
     text-decoration: none;
+
+    width: 100%;
 }
 
 .container {
@@ -16,4 +18,8 @@
     position: relative;
     border-radius: 8px;
     background-color: var(--black-03);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }

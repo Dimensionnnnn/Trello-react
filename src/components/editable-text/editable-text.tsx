@@ -1,5 +1,6 @@
 import { TextArea } from 'components/UI/text-area/text-area';
 import { useFocusAndSelect } from 'hooks/useFocusAndSelect';
+import styles from './editable-text.module.scss';
 import React, { useRef } from 'react';
 
 interface Props {
@@ -42,7 +43,7 @@ export const EditableText: React.FC<Props> = ({value, onChange }) => {
                     onKeyDown={handleKeyDown}
                 />
             ) : (
-                <div onClick={onClick}>
+                <div onClick={onClick} className={styles.text}>
                     {value ? value : "Нажмите для редактирования"}
                 </div>
             )}
