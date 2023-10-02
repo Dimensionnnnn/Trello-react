@@ -29,7 +29,8 @@
     background-color: var(--white);
     transform: scale(0.5);
     transition: 0.1s ease-in-out;
-    width: 35%;
+    max-width: 500px;
+    width: 100%;
     z-index: -1;
 
     display: flex;
