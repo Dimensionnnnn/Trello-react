@@ -1,16 +1,23 @@
 import { Column } from "components/column/column";
 import React, { useState } from "react";
 import styles from "./board.module.scss";
-import { columns as columnsData, cards as cardsData , comments } from "data/data";
+import { columns as columnsData, cards as cardsData , comments as commentsData } from "data/data";
 import { CardProps } from "components/column/column";
+import { CommentProps } from "components/popup-card/popup-card";
 import { Card as ICard } from "types/types";
 import { Column as IColumn } from "types/types";
+import { Comment as IComment } from "types/types";
 import { PopupCard } from "components/popup-card/popup-card";
 import { v4 as uuidv4 } from "uuid";
 
-export const Board: React.FC = () => {
+interface Props {
+    username: string;
+}
+
+export const Board: React.FC<Props> = ({username}) => {
     const [columns, setColumns] = useState<Record<string, IColumn>>(columnsData);
     const [cards, setCards] = useState<Record<string, ICard>>(cardsData);
+    const [comments, setComments] = useState<Record<string, IComment>>(commentsData);
 
     const [activeCardIdPopup, setActiveCardIdPopup] = useState<string | null>(null);
 
@@ -70,6 +77,46 @@ export const Board: React.FC = () => {
         }
     }
 
+    const getItialCommentsToCurrentCard = (cardId: string | null) => {
+        return Object.values(comments).reduce((acc: CommentProps, comment: IComment) => {
+            if (comment.cardId === cardId) {
+                acc[comment.id] = comment;
+            }
+            return acc;
+        }, {});
+    }
+
+    const handleAddComment = (newCardDescription?: string, cardId?: string) => {
+        if (newCardDescription && cardId) {
+            const newComment: IComment = {
+                id: uuidv4(),
+                cardId: cardId,
+                description: newCardDescription,
+                author: username,
+            }
+    
+            const updatedComments = {...comments};
+            updatedComments[newComment.id] = newComment;
+            setComments(updatedComments);
+        }
+    }
+
+    const handleDeleteComment = (commentId?: string) => {
+        if (commentId) {
+            const updatedComments = {...comments};
+            delete updatedComments[commentId];
+            setComments(updatedComments);
+        }
+    }
+
+    const handleCommentDescriptionChange = (id?: string, newDescription?: string) => {
+        if (id && newDescription) {
+            const updatedComments = {...comments};
+            updatedComments[id].description = newDescription;
+            setComments(updatedComments);
+        }
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.wrapper}>
@@ -91,6 +138,10 @@ export const Board: React.FC = () => {
                 isOpen={!!activeCardIdPopup}
                 onClose={() => {setActiveCardIdPopup(null)}}
                 card={getCardById(activeCardIdPopup)}
+                comments={getItialCommentsToCurrentCard(activeCardIdPopup)}
+                onAddComment={handleAddComment}
+                onDeleteComment={handleDeleteComment}
+                onCommentDescriptionChange={handleCommentDescriptionChange}
                 onCardTextChange={handleCardTextChange}
                 onDescriptionChange={handleCardDescriptionChange}
             />

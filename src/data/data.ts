@@ -49,35 +49,42 @@ export const comments = {
         id: "1001",
         cardId: "101",
         description: "Try hard!",
+        author: "Alex",
     },
     "1002": {
         id: "1002",
         cardId: "101",
         description: "Try harder!",
+        author: "Alex",
     },
     "1003": {
         id: "1003",
         cardId: "102",
         description: "Try hard!",
+        author: "John",
     },
     "1004": {
         id: "1004",
         cardId: "102",
         description: "Try harder!",
+        author: "John",
     },
     "1005": {
         id: "1005",
         cardId: "201",
         description: "Try hard!",
+        author: "Alex",
     },
     "1006": {
         id: "1006",
         cardId: "201",
         description: "Try harder!",
+        author: "John",
     },
     "1007": {
         id: "1007",
         cardId: "202",
         description: "Try hard!",
+        author: "Artur",
     }
 }

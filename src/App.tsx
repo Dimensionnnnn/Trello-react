@@ -17,7 +17,7 @@ function App() {
         <>
           <div className={styles.container}>
             <Header username={username} />
-            <Board />
+            <Board username={username} />
           </div>
         </>
       ) :
