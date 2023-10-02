@@ -63,14 +63,14 @@ export const CardAdd: React.FC<Props> = ({ columnId, onAddCard }) => {
                         onMouseDown={handleAddCard}
                         disabled={!trimmedCardTitle}
                     >
-                        {'Add card'}
+                        Add card
                     </Button>
                 </>
             ) : (
                 <Button
                     onClick={handleAddingCardClick}
                 >
-                    {'Add card'}
+                    Add card
                 </Button>
             )}
         </>

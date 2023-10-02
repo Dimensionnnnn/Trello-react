@@ -1,6 +1,6 @@
 import * as React from "react";
 import { SVGProps } from "react";
-const DeleteSvg = (props: SVGProps<SVGSVGElement>) => (
+export const SVGDelete = (props: SVGProps<SVGSVGElement>) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlSpace="preserve"
@@ -15,4 +15,3 @@ const DeleteSvg = (props: SVGProps<SVGSVGElement>) => (
         <path d="M171.144 422.863c7.218 0 13.069-5.853 13.069-13.068V262.641c0-7.216-5.852-13.07-13.069-13.07-7.217 0-13.069 5.854-13.069 13.07v147.154c-.001 7.217 5.851 13.068 13.069 13.068zM241.214 422.863c7.218 0 13.07-5.853 13.07-13.068V262.641c0-7.216-5.854-13.07-13.07-13.07-7.217 0-13.069 5.854-13.069 13.07v147.154c0 7.217 5.851 13.068 13.069 13.068zM311.284 422.863c7.217 0 13.068-5.853 13.068-13.068V262.641c0-7.216-5.852-13.07-13.068-13.07-7.219 0-13.07 5.854-13.07 13.07v147.154c-.001 7.217 5.853 13.068 13.07 13.068z" />
     </svg>
 );
-export default DeleteSvg;

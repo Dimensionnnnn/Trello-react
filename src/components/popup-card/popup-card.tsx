@@ -32,7 +32,7 @@ export const PopupCard: React.FC<Props> = ({isOpen, onClose, card, onCardTextCha
             />
 
             <Button onClick={onClose}>
-                {'Закрыть'}
+                Закрыть
             </Button>
         </Popup>
     )
