@@ -18,6 +18,7 @@ interface Props {
     onDeleteCard: (cardId: string) => void;
     onCardTextChange: (id: string, newTitle: string) => void;
     onCardClick: (cardId: string | null) => void;
+    getCommentsCountByCardId: (cardId: string) => number;
 }
 
 export const Column: React.FC<Props> = ({
@@ -29,6 +30,7 @@ export const Column: React.FC<Props> = ({
     onDeleteCard,
     onCardTextChange,
     onCardClick,
+    getCommentsCountByCardId
 }) => {
     return (
         <div className={styles.container}>
@@ -43,6 +45,7 @@ export const Column: React.FC<Props> = ({
                         onCardTextChange={onCardTextChange}
                         onCardClick={onCardClick}
                         onDeleteCard={onDeleteCard}
+                        getCommentsCountByCardId={getCommentsCountByCardId}
                     />
                 </div>
 

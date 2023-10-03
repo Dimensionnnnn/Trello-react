@@ -137,6 +137,10 @@ export const Board: React.FC<Props> = ({username}) => {
         }
     }
 
+    const getCommentsCountByCardId = (cardId: string) => {
+        return Object.values(comments).filter((comment: IComment) => comment.cardId === cardId).length
+    }
+
     return (
         <main className={styles.container}>
             <section className={styles.wrapper}>
@@ -151,6 +155,7 @@ export const Board: React.FC<Props> = ({username}) => {
                         onDeleteCard={handleDeleteCard}
                         onCardTextChange={handleCardTextChange}
                         onCardClick={setActiveCardIdPopup}
+                        getCommentsCountByCardId={getCommentsCountByCardId}
                     />
                 ))}
             </section>
