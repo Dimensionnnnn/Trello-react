@@ -3,12 +3,15 @@ import { WelcomeModal } from "components/welcome-modal/welcome-modal";
 import { Header } from "components/header/header";
 import { Board } from "components/board/board";
 import styles from "./App.module.scss";
+import { StorageService } from "services/storage-service";
 
 function App() {
-  const [username, setUsername] = useState('');
+  const initialUsername = StorageService.getItem('username');
+  const [username, setUsername] = useState(initialUsername);
 
-  const handleUsernameSubmit = (username: string) => {
-    setUsername(username);
+  const handleUsernameSubmit = (newUsername: string) => {
+    setUsername(newUsername);
+    StorageService.setItem('username', newUsername);
   }
 
   return (
