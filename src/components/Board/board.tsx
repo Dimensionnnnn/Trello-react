@@ -1,8 +1,7 @@
-import { Column } from "components/column/column";
+import { Column, CardProps } from "components/column/column";
 import React, { useState } from "react";
 import styles from "./board.module.scss";
 import { columns as columnsData, cards as cardsData , comments as commentsData } from "data/data";
-import { CardProps } from "components/column/column";
 import { CommentProps } from "components/popup-card/popup-card";
 import { Card as ICard } from "types/types";
 import { Column as IColumn } from "types/types";

@@ -2,16 +2,22 @@
     word-wrap: break-word;
     clear: both;
     color: var(--white-02);
-    margin: 0 0 4px;
+    padding: 10px;
     overflow: hidden;
     text-decoration: none;
 
     width: 100%;
+
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:hover {
+        background-color: lighten(#22272b, 20%);
+        color: #000;
+    }
 }
 
 .container {
     overflow: hidden;
-    padding: 8px 8px 4px 12px;
     margin-bottom: 10px;
     margin-left: 4px;
     margin-right: 4px;
