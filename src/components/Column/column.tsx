@@ -33,9 +33,9 @@ export const Column: React.FC<Props> = ({
     return (
         <div className={styles.container}>
             <div className={styles.wrapper}>
-                <div className={styles.header}>
+                <article className={styles.header}>
                     <TitleEdit title={title} onTitleChange={onTitleChange} />
-                </div>
+                </article>
 
                 <div className={styles.cards}>
                     <CardList

@@ -138,8 +138,8 @@ export const Board: React.FC<Props> = ({username}) => {
     }
 
     return (
-        <div className={styles.container}>
-            <div className={styles.wrapper}>
+        <main className={styles.container}>
+            <section className={styles.wrapper}>
                 {Object.values(columns).map((column) => (
                     <Column
                         key={column.id}
@@ -153,7 +153,7 @@ export const Board: React.FC<Props> = ({username}) => {
                         onCardClick={setActiveCardIdPopup}
                     />
                 ))}
-            </div>
+            </section>
             <PopupCard
                 isOpen={!!activeCardIdPopup}
                 onClose={() => {setActiveCardIdPopup(null)}}
@@ -165,6 +165,6 @@ export const Board: React.FC<Props> = ({username}) => {
                 onCardTextChange={handleCardTextChange}
                 onDescriptionChange={handleCardDescriptionChange}
             />
-        </div>
+        </main>
     );
 };
