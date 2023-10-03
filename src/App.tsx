@@ -1,23 +1,18 @@
-import { useEffect, useState} from "react";
+import { useState} from "react";
 import { WelcomeModal } from "components/welcome-modal/welcome-modal";
 import { Header } from "components/header/header";
 import { Board } from "components/board/board";
 import styles from "./App.module.scss";
+import { StorageService } from "services/storage-service";
 
 function App() {
-  const [username, setUsername] = useState('');
+  const initialUsername = StorageService.getItem('username');
+  const [username, setUsername] = useState(initialUsername);
 
-  const handleUsernameSubmit = (username: string) => {
-    setUsername(username);
-    localStorage.setItem('username', username);
+  const handleUsernameSubmit = (newUsername: string) => {
+    setUsername(newUsername);
+    StorageService.setItem('username', newUsername);
   }
-
-  useEffect(() => {
-    const storedUsername = localStorage.getItem('username');
-    if (storedUsername && !username) {
-      setUsername(storedUsername);
-    }
-  }, [username]);
 
   return (
     <>

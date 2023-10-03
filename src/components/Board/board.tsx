@@ -1,5 +1,5 @@
 import { Column } from "components/column/column";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./board.module.scss";
 import { columns as columnsData, cards as cardsData , comments as commentsData } from "data/data";
 import { CardProps } from "components/column/column";
@@ -9,41 +9,38 @@ import { Column as IColumn } from "types/types";
 import { Comment as IComment } from "types/types";
 import { PopupCard } from "components/popup-card/popup-card";
 import { v4 as uuidv4 } from "uuid";
+import { initializeStateFromLocalStorage } from "utils/utils";
+import { StorageService } from "services/storage-service";
 
 interface Props {
     username: string;
 }
 
 export const Board: React.FC<Props> = ({username}) => {
-    const [columns, setColumns] = useState<Record<string, IColumn>>(columnsData);
-    const [cards, setCards] = useState<Record<string, ICard>>(cardsData);
-    const [comments, setComments] = useState<Record<string, IComment>>(commentsData);
+    const initialColumns = initializeStateFromLocalStorage('columns', columnsData);
+    const initialCards = initializeStateFromLocalStorage('cards', cardsData);
+    const initialComments = initializeStateFromLocalStorage('comments', commentsData);
+
+    const [columns, setColumns] = useState<Record<string, IColumn>>(initialColumns);
+    const [cards, setCards] = useState<Record<string, ICard>>(initialCards);
+    const [comments, setComments] = useState<Record<string, IComment>>(initialComments);
 
     const [activeCardIdPopup, setActiveCardIdPopup] = useState<string | null>(null);
 
-    useEffect(() => {
-        const storedColumns = localStorage.getItem('columns');
-        const storedCards = localStorage.getItem('cards');
-        const storedComments = localStorage.getItem('comments');
+    const updateColumns = (newColumns: Record<string, IColumn>) => {
+        setColumns(newColumns);
+        StorageService.setItem('columns', newColumns);
+    }
 
-        if (storedColumns) {
-            setColumns(JSON.parse(storedColumns));
-        } else {
-            setColumns(columnsData);
-        }
+    const updateCards = (newCards: Record<string, ICard>) => {
+        setCards(newCards);
+        StorageService.setItem('cards', newCards);
+    }
 
-        if (storedCards) {
-            setCards(JSON.parse(storedCards));
-        } else {
-            setCards(cardsData);
-        }
-
-        if (storedComments) {
-            setComments(JSON.parse(storedComments));
-        } else {
-            setComments(commentsData);
-        }
-    }, [])
+    const updateComments = (newComments: Record<string, IComment>) => {
+        setComments(newComments);
+        StorageService.setItem('comments', newComments);
+    }
 
     const getInitialCardsToCurrentColumn = (columnId: string) => {
         return Object.values(cards).reduce((acc: CardProps, card: ICard) => {
@@ -52,21 +49,6 @@ export const Board: React.FC<Props> = ({username}) => {
             }
             return acc;
         }, {});
-    }
-
-    const updateColumns = (newColumns: Record<string, IColumn>) => {
-        setColumns(newColumns);
-        localStorage.setItem('columns', JSON.stringify(newColumns));
-    }
-
-    const updateCards = (newCards: Record<string, ICard>) => {
-        setCards(newCards);
-        localStorage.setItem('cards', JSON.stringify(newCards));
-    }
-
-    const updateComments = (newComments: Record<string, IComment>) => {
-        setComments(newComments);
-        localStorage.setItem('comments', JSON.stringify(newComments));
     }
 
     const handleColumnTitleChange = (id: string, newTitle: string) => {
