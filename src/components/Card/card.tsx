@@ -41,7 +41,7 @@ export const Card: React.FC<Props> = ({
     };
 
     return (
-        <div className={styles.container}>
+        <article className={styles.container}>
             {activeCardIdEditing ? (
                 <TextArea
                     key={card.id}
@@ -53,9 +53,9 @@ export const Card: React.FC<Props> = ({
                 />
             ) : (
                 <>
-                    <div className={styles.card} onClick={() => onCardClick(card.id)}>
+                    <p className={styles.card} onClick={() => onCardClick(card.id)}>
                         {card.title}
-                    </div>
+                    </p>
 
                     <div>
                         <Button
@@ -72,6 +72,6 @@ export const Card: React.FC<Props> = ({
                     </div>
                 </>
             )}
-        </div>
+        </article>
     );
 };

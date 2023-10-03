@@ -7,8 +7,8 @@ interface Props {
 
 export const Header: React.FC<Props> = ({username}) => {
     return (
-        <div className={styles.container}>
+        <header className={styles.container}>
             <h1 className={styles.content}>{username}</h1>
-        </div>
+        </header>
     )
 };

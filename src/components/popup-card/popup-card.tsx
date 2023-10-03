@@ -3,7 +3,7 @@ import {} from "hooks/useFocusAndSelect";
 import { Card } from "types/types";
 import { Comment } from "types/types";
 import { Button } from "components/UI/button/button";
-import { EditableText } from "components/editable-text/editable-text";
+import { EditableText } from "components/UI/editable-text/editable-text";
 import { SvgClose } from "shared/icons/components/close-svg";
 import styles from "./popup-card.module.scss";
 import { CommentsList } from "components/comments-list/comments-list";

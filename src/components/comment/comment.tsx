@@ -39,7 +39,7 @@ export const Comment: React.FC<Props> = ({comment, onDescriptionChange, onDelete
     }
 
     return (
-        <div className={styles.root}>
+        <article className={styles.root}>
             {commentIdEditinig ? (
                 <TextArea
                     ref={textAreaRef}
@@ -50,7 +50,7 @@ export const Comment: React.FC<Props> = ({comment, onDescriptionChange, onDelete
                 />
             ) : (
                 <>
-                    <div className={styles.text}>{comment.description}</div>
+                    <p className={styles.text}>{comment.description}</p>
 
                     <div>
                         <Button
@@ -67,6 +67,6 @@ export const Comment: React.FC<Props> = ({comment, onDescriptionChange, onDelete
                     </div>
                 </>
             )}
-        </div>
+        </article>
     )
 }

@@ -1,8 +1,7 @@
-import { Column } from "components/column/column";
+import { Column, CardProps } from "components/column/column";
 import React, { useState } from "react";
 import styles from "./board.module.scss";
 import { columns as columnsData, cards as cardsData , comments as commentsData } from "data/data";
-import { CardProps } from "components/column/column";
 import { CommentProps } from "components/popup-card/popup-card";
 import { Card as ICard } from "types/types";
 import { Column as IColumn } from "types/types";
@@ -139,8 +138,8 @@ export const Board: React.FC<Props> = ({username}) => {
     }
 
     return (
-        <div className={styles.container}>
-            <div className={styles.wrapper}>
+        <main className={styles.container}>
+            <section className={styles.wrapper}>
                 {Object.values(columns).map((column) => (
                     <Column
                         key={column.id}
@@ -154,7 +153,7 @@ export const Board: React.FC<Props> = ({username}) => {
                         onCardClick={setActiveCardIdPopup}
                     />
                 ))}
-            </div>
+            </section>
             <PopupCard
                 isOpen={!!activeCardIdPopup}
                 onClose={() => {setActiveCardIdPopup(null)}}
@@ -166,6 +165,6 @@ export const Board: React.FC<Props> = ({username}) => {
                 onCardTextChange={handleCardTextChange}
                 onDescriptionChange={handleCardDescriptionChange}
             />
-        </div>
+        </main>
     );
 };
