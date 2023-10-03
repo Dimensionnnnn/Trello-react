@@ -12,12 +12,11 @@
     letter-spacing: .08em;
     text-transform: uppercase;
     position: relative;
-    transition: background-color .6s ease, scale .6s ease;
+    transition: background-color .6s ease;
     overflow: hidden;
 
     &:focus,
     &:hover {
         background-color: lighten(#000, 30%);
-        scale: 1.03;
     }
 }

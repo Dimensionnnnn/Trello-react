@@ -9,3 +9,10 @@ export interface Card {
     title: string;
     description: string;
 }
+
+export interface Comment {
+    id: string;
+    cardId: string;
+    description: string;
+    author: string;
+}
