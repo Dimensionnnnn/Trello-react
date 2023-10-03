@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import styles from "./comment-add.module.scss";
-import { AddItem } from "components/add-item/add-item";
+import { AddItem } from "components/UI/add-item/add-item";
 
 interface Props {
     cardId?: string;
