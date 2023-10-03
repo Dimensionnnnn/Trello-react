@@ -7,14 +7,12 @@ import styles from "./add-item.module.scss";
 interface Props {
     onClose: () => void;
     onAddItem: (newItemValue: string) => void;
-    className?: string;
 }
 
-export const AddItem: React.FC<Props> = ({ onClose, onAddItem, className }) => {
+export const AddItem: React.FC<Props> = ({ onClose, onAddItem }) => {
     const [newValue, setNewValue] = useState('');
     const trimmedValue = newValue.trim();
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
-
 
     useFocusAndSelect({
         ref: textAreaRef,
