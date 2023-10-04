@@ -1,7 +1,6 @@
 import { Column, CardProps } from "components/column/column";
 import React, { useState } from "react";
 import styles from "./board.module.scss";
-import { columns as columnsData, cards as cardsData , comments as commentsData } from "data/data";
 import { CommentProps } from "components/popup-card/popup-card";
 import { Card as ICard } from "types/types";
 import { Column as IColumn } from "types/types";
@@ -16,9 +15,9 @@ interface Props {
 }
 
 export const Board: React.FC<Props> = ({username}) => {
-    const [columns, setColumns] = useState<Record<string, IColumn>>(getColumns(columnsData));
-    const [cards, setCards] = useState<Record<string, ICard>>(getCards(cardsData));
-    const [comments, setComments] = useState<Record<string, IComment>>(getComments(commentsData));
+    const [columns, setColumns] = useState<Record<string, IColumn>>(getColumns());
+    const [cards, setCards] = useState<Record<string, ICard>>(getCards());
+    const [comments, setComments] = useState<Record<string, IComment>>(getComments());
 
     const [activeCardIdPopup, setActiveCardIdPopup] = useState<string | null>(null);
 

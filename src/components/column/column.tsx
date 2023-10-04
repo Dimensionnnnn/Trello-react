@@ -1,10 +1,9 @@
 import { Card as ICard } from "types/types";
-import React, {useState} from "react";
+import React  from "react";
 import styles from "./column.module.scss";
 import { CardList } from "../card-list/card-list";
 import { TitleEdit } from "components/UI/title-edit/title-edit";
 import { AddItem } from "components/UI/add-item/add-item";
-import { Button } from "components/UI/button/button";
 
 export interface CardProps {
     [id: string]: ICard;
@@ -33,8 +32,6 @@ export const Column: React.FC<Props> = ({
     onCardClick,
     getCommentsCountByCardId
 }) => {
-    const [isAddingCard, setIsAddingCard] = useState(false);
-
     return (
         <div className={styles.container}>
             <div className={styles.wrapper}>
@@ -53,12 +50,8 @@ export const Column: React.FC<Props> = ({
                 </div>
 
                 <AddItem
-                    isOpen={isAddingCard}
-                    onClose={() => setIsAddingCard(false)}
                     onAddItem={(newItemValue) => onAddCard(newItemValue, id)}
-                >
-                    <Button onClick={() => setIsAddingCard(true)}>Add card</Button>
-                </AddItem>
+                />
             </div>
         </div>
     );

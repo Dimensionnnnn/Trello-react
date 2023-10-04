@@ -8,7 +8,6 @@ import { SvgClose } from "shared/icons/components/close-svg";
 import styles from "./popup-card.module.scss";
 import { CommentsList } from "components/comments-list/comments-list";
 import { AddItem } from "components/UI/add-item/add-item";
-import { useState } from "react";
 
 export interface CommentProps {
     [id: string]: Comment;
@@ -37,8 +36,6 @@ export const PopupCard: React.FC<Props> = ({
     onDeleteComment,
     onCommentDescriptionChange,
 }) => {
-    const [isAddingComment, setIsAddingComment] = useState(false);
-
     return (
         <Popup isOpen={isOpen} onClose={onClose}>
             <h2>Карточка</h2>
@@ -57,12 +54,8 @@ export const PopupCard: React.FC<Props> = ({
             <h3>Комментарии</h3>
 
             <AddItem
-                isOpen={isAddingComment}
-                onClose={() => setIsAddingComment(false)}
                 onAddItem={(newItemValue) => onAddComment(newItemValue, card?.id)}
-            >
-                <div className={styles.text} onClick={() => setIsAddingComment(true)}>Write your comment...</div>
-            </AddItem>
+            />
 
             <CommentsList 
                 comments={comments}

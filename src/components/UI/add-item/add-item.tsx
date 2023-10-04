@@ -5,20 +5,18 @@ import React, { useRef, useState } from "react";
 import styles from "./add-item.module.scss";
 
 interface Props {
-    isOpen: boolean;
-    onClose: () => void;
     onAddItem: (newItemValue: string) => void;
-    children: React.ReactNode;
 }
 
-export const AddItem: React.FC<Props> = ({ isOpen, onClose, onAddItem, children }) => {
+export const AddItem: React.FC<Props> = ({ onAddItem }) => {
+    const [isAddingItem, setIsAddingItem] = useState(false);
     const [newValue, setNewValue] = useState('');
     const trimmedValue = newValue.trim();
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
     useFocusAndSelect({
         ref: textAreaRef,
-        condition: isOpen,
+        condition: isAddingItem,
         value: newValue
     })
 
@@ -46,9 +44,13 @@ export const AddItem: React.FC<Props> = ({ isOpen, onClose, onAddItem, children 
         }
     }
 
+    const onClose = () => {
+        setIsAddingItem(false);
+    }
+
     return (
         <>
-            {isOpen ? (
+            {isAddingItem ? (
                 <form className={styles.wrapper} onSubmit={addItem} onBlur={handleBlur}>
                     <TextArea
                         value={newValue}
@@ -66,7 +68,9 @@ export const AddItem: React.FC<Props> = ({ isOpen, onClose, onAddItem, children 
                     </Button>
                 </form>
             ) : (
-                children
+                <Button onClick={() => setIsAddingItem(true)}>
+                    Add item
+                </Button>
             )}
         </>
     )

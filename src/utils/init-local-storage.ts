@@ -1,18 +1,19 @@
 import { StorageService } from "services/storage-service";
+import { columns, cards, comments } from "data/data";
 
 export const initializeStateFromLocalStorage = <T>(key: string, initialState: T): T => {
     const storedData = StorageService.getItem<T>(key);
     return storedData ? storedData : initialState;
 }
 
-export const getColumns = <T>(columnsData: T) => {
-    return initializeStateFromLocalStorage('columns', columnsData);
+export const getColumns = () => {
+    return initializeStateFromLocalStorage('columns', columns);
 }
 
-export const getCards = <T>(cardsData: T) => {
-    return initializeStateFromLocalStorage('cards', cardsData);
+export const getCards = () => {
+    return initializeStateFromLocalStorage('cards', cards);
 }
 
-export const getComments = <T>(commentsData: T) => {
-    return initializeStateFromLocalStorage('comments', commentsData);
+export const getComments = () => {
+    return initializeStateFromLocalStorage('comments', comments);
 }
