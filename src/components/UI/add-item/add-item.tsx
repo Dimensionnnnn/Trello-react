@@ -18,7 +18,7 @@ export const AddItem: React.FC<Props> = ({ isOpen, onClose, onAddItem, children 
 
     useFocusAndSelect({
         ref: textAreaRef,
-        condition: true,
+        condition: isOpen,
         value: newValue
     })
 

@@ -8,7 +8,7 @@ import { Column as IColumn } from "types/types";
 import { Comment as IComment } from "types/types";
 import { PopupCard } from "components/popup-card/popup-card";
 import { v4 as uuidv4 } from "uuid";
-import { initializeStateFromLocalStorage } from "utils/init-local-storage";
+import { getCards, getColumns, getComments } from "utils/init-local-storage";
 import { StorageService } from "services/storage-service";
 
 interface Props {
@@ -16,13 +16,9 @@ interface Props {
 }
 
 export const Board: React.FC<Props> = ({username}) => {
-    const initialColumns = initializeStateFromLocalStorage('columns', columnsData);
-    const initialCards = initializeStateFromLocalStorage('cards', cardsData);
-    const initialComments = initializeStateFromLocalStorage('comments', commentsData);
-
-    const [columns, setColumns] = useState<Record<string, IColumn>>(initialColumns);
-    const [cards, setCards] = useState<Record<string, ICard>>(initialCards);
-    const [comments, setComments] = useState<Record<string, IComment>>(initialComments);
+    const [columns, setColumns] = useState<Record<string, IColumn>>(getColumns(columnsData));
+    const [cards, setCards] = useState<Record<string, ICard>>(getCards(cardsData));
+    const [comments, setComments] = useState<Record<string, IComment>>(getComments(commentsData));
 
     const [activeCardIdPopup, setActiveCardIdPopup] = useState<string | null>(null);
 
