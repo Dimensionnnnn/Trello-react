@@ -50,41 +50,48 @@ export const comments = {
         cardId: "101",
         description: "Try hard!",
         author: "Alex",
+        createdAt: new Date("2023-09-04T10:00:00"),
     },
     "1002": {
         id: "1002",
         cardId: "101",
         description: "Try harder!",
         author: "Alex",
+        createdAt: new Date("2023-09-04T10:00:00"),
     },
     "1003": {
         id: "1003",
         cardId: "102",
         description: "Try hard!",
         author: "John",
+        createdAt: new Date("2023-09-04T10:00:00"),
     },
     "1004": {
         id: "1004",
         cardId: "102",
         description: "Try harder!",
         author: "John",
+        createdAt: new Date("2023-09-04T10:00:00"),
     },
     "1005": {
         id: "1005",
         cardId: "201",
         description: "Try hard!",
         author: "Alex",
+        createdAt: new Date("2023-09-04T10:00:00"),
     },
     "1006": {
         id: "1006",
         cardId: "201",
         description: "Try harder!",
         author: "John",
+        createdAt: new Date("2023-09-04T10:00:00"),
     },
     "1007": {
         id: "1007",
         cardId: "202",
         description: "Try hard!",
         author: "Artur",
+        createdAt: new Date("2023-09-04T10:00:00"),
     }
 }

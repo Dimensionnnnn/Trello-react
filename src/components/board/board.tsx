@@ -1,14 +1,13 @@
 import { Column, CardProps } from "components/column/column";
 import React, { useState } from "react";
 import styles from "./board.module.scss";
-import { columns as columnsData, cards as cardsData , comments as commentsData } from "data/data";
 import { CommentProps } from "components/popup-card/popup-card";
 import { Card as ICard } from "types/types";
 import { Column as IColumn } from "types/types";
 import { Comment as IComment } from "types/types";
 import { PopupCard } from "components/popup-card/popup-card";
 import { v4 as uuidv4 } from "uuid";
-import { initializeStateFromLocalStorage } from "utils/utils";
+import { getCards, getColumns, getComments } from "utils/init-local-storage";
 import { StorageService } from "services/storage-service";
 
 interface Props {
@@ -16,13 +15,9 @@ interface Props {
 }
 
 export const Board: React.FC<Props> = ({username}) => {
-    const initialColumns = initializeStateFromLocalStorage('columns', columnsData);
-    const initialCards = initializeStateFromLocalStorage('cards', cardsData);
-    const initialComments = initializeStateFromLocalStorage('comments', commentsData);
-
-    const [columns, setColumns] = useState<Record<string, IColumn>>(initialColumns);
-    const [cards, setCards] = useState<Record<string, ICard>>(initialCards);
-    const [comments, setComments] = useState<Record<string, IComment>>(initialComments);
+    const [columns, setColumns] = useState<Record<string, IColumn>>(getColumns);
+    const [cards, setCards] = useState<Record<string, ICard>>(getCards);
+    const [comments, setComments] = useState<Record<string, IComment>>(getComments);
 
     const [activeCardIdPopup, setActiveCardIdPopup] = useState<string | null>(null);
 
@@ -113,6 +108,7 @@ export const Board: React.FC<Props> = ({username}) => {
                 cardId: cardId,
                 description: newCardDescription,
                 author: username,
+                createdAt: new Date(),
             }
     
             const updatedComments = {...comments};
@@ -137,6 +133,10 @@ export const Board: React.FC<Props> = ({username}) => {
         }
     }
 
+    const getCommentsCountByCardId = (cardId: string) => {
+        return Object.values(comments).filter((comment: IComment) => comment.cardId === cardId).length
+    }
+
     return (
         <main className={styles.container}>
             <section className={styles.wrapper}>
@@ -151,6 +151,7 @@ export const Board: React.FC<Props> = ({username}) => {
                         onDeleteCard={handleDeleteCard}
                         onCardTextChange={handleCardTextChange}
                         onCardClick={setActiveCardIdPopup}
+                        getCommentsCountByCardId={getCommentsCountByCardId}
                     />
                 ))}
             </section>

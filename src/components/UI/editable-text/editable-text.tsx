@@ -19,6 +19,7 @@ export const EditableText: React.FC<Props> = ({value, onChange }) => {
     })
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
+        e.stopPropagation();
         if (e.key === "Enter" || e.key === "Escape") {
             onClose()
         }

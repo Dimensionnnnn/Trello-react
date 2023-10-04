@@ -25,6 +25,7 @@ export const Comment: React.FC<Props> = ({comment, onDescriptionChange, onDelete
     })
     
     const handleKeyDown = (e: React.KeyboardEvent) => {
+        e.stopPropagation();
         if (e.key === "Enter" || e.key === "Escape") {
             onClose();
         }
@@ -39,34 +40,37 @@ export const Comment: React.FC<Props> = ({comment, onDescriptionChange, onDelete
     }
 
     return (
-        <article className={styles.root}>
-            {commentIdEditinig ? (
-                <TextArea
-                    ref={textAreaRef}
-                    value={comment.description}
-                    onChange={(e) => onDescriptionChange(e.target.value)}
-                    onBlur={onClose}
-                    onKeyDown={handleKeyDown}
-                />
-            ) : (
-                <>
-                    <p className={styles.text}>{comment.description}</p>
+        <>
+            <h4 className={styles.author}>Автор: {comment.author}</h4>
+            <div className={styles.root}>
+                {commentIdEditinig ? (
+                    <TextArea
+                        ref={textAreaRef}
+                        value={comment.description}
+                        onChange={(e) => onDescriptionChange(e.target.value)}
+                        onBlur={onClose}
+                        onKeyDown={handleKeyDown}
+                    />
+                ) : (
+                    <>
+                        <p className={styles.text}>{comment.description}</p>
 
-                    <div>
-                        <Button
-                            onClick={onClick}
-                        >
-                            <SvgEdit/>
-                        </Button>
+                        <div>
+                            <Button
+                                onClick={onClick}
+                            >
+                                <SvgEdit/>
+                            </Button>
 
-                        <Button
-                            onClick={() => onDeleteComment(comment.id)}
-                        >
-                            <SvgDelete/>
-                        </Button>
-                    </div>
-                </>
-            )}
-        </article>
+                            <Button
+                                onClick={() => onDeleteComment(comment.id)}
+                            >
+                                <SvgDelete/>
+                            </Button>
+                        </div>
+                    </>
+                )}
+            </div>
+        </>
     )
 }

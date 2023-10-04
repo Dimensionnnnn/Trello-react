@@ -7,6 +7,7 @@ interface Props {
     onCardTextChange: (id: string, newTitle: string) => void;
     onCardClick: (cardId: string | null) => void;
     onDeleteCard: (cardId: string) => void;
+    getCommentsCountByCardId: (cardId: string) => number;
 }
 
 export const CardList: React.FC<Props> = ({
@@ -14,6 +15,7 @@ export const CardList: React.FC<Props> = ({
     onCardTextChange,
     onCardClick,
     onDeleteCard,
+    getCommentsCountByCardId
 }) => {
     return (
         <>
@@ -24,6 +26,7 @@ export const CardList: React.FC<Props> = ({
                     onTextChange={(newText: string) => onCardTextChange(card.id, newText)}
                     onCardClick={onCardClick}
                     onDeleteCard={onDeleteCard}
+                    commentsCount={getCommentsCountByCardId(card.id)}
                 />
             ))}
         </>

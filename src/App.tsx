@@ -2,11 +2,11 @@ import { useState} from "react";
 import { WelcomeModal } from "components/welcome-modal/welcome-modal";
 import { Header } from "components/header/header";
 import { Board } from "components/board/board";
-import styles from "assets/App.module.scss";
+import styles from "assets/global.module.scss";
 import { StorageService } from "services/storage-service";
 
 function App() {
-  const initialUsername = StorageService.getItem('username');
+  const initialUsername = StorageService.getItem<string>('username');
   const [username, setUsername] = useState(initialUsername);
 
   const handleUsernameSubmit = (newUsername: string) => {

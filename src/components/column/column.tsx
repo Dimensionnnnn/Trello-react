@@ -1,9 +1,9 @@
 import { Card as ICard } from "types/types";
-import React from "react";
+import React  from "react";
 import styles from "./column.module.scss";
 import { CardList } from "../card-list/card-list";
-import { CardAdd } from "../card-add/card-add";
 import { TitleEdit } from "components/UI/title-edit/title-edit";
+import { AddItem } from "components/UI/add-item/add-item";
 
 export interface CardProps {
     [id: string]: ICard;
@@ -18,6 +18,7 @@ interface Props {
     onDeleteCard: (cardId: string) => void;
     onCardTextChange: (id: string, newTitle: string) => void;
     onCardClick: (cardId: string | null) => void;
+    getCommentsCountByCardId: (cardId: string) => number;
 }
 
 export const Column: React.FC<Props> = ({
@@ -29,13 +30,14 @@ export const Column: React.FC<Props> = ({
     onDeleteCard,
     onCardTextChange,
     onCardClick,
+    getCommentsCountByCardId
 }) => {
     return (
         <div className={styles.container}>
             <div className={styles.wrapper}>
-                <article className={styles.header}>
+                <div className={styles.header}>
                     <TitleEdit title={title} onTitleChange={onTitleChange} />
-                </article>
+                </div>
 
                 <div className={styles.cards}>
                     <CardList
@@ -43,11 +45,15 @@ export const Column: React.FC<Props> = ({
                         onCardTextChange={onCardTextChange}
                         onCardClick={onCardClick}
                         onDeleteCard={onDeleteCard}
+                        getCommentsCountByCardId={getCommentsCountByCardId}
                     />
                 </div>
 
-                <CardAdd onAddCard={onAddCard} columnId={id} />
+                <AddItem
+                    onAddItem={(newItemValue) => onAddCard(newItemValue, id)}
+                />
             </div>
         </div>
     );
 };
+

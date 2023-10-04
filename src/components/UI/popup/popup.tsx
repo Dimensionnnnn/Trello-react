@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classNames from "classnames";
 import styles from './popup.module.scss';
 
@@ -17,6 +17,22 @@ export const Popup: React.FC<Props> = ({isOpen, onClose, children, className}) =
     const contentClasses = classNames(styles.content, className, {
         [styles.active]: isOpen
     })
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (isOpen && e.key === "Escape") {
+                onClose();
+            }
+        }
+
+        if (isOpen) {
+            document.addEventListener("keydown", handleKeyDown);
+        }
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        }
+    }, [isOpen, onClose])
 
     return (
         <div className={containerClasses}>

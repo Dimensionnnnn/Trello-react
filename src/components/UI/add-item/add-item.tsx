@@ -1,26 +1,27 @@
 import { Button } from "components/UI/button/button";
 import { TextArea } from "components/UI/text-area/text-area"
 import { useFocusAndSelect } from "hooks/useFocusAndSelect";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import styles from "./add-item.module.scss";
 
 interface Props {
-    onClose: () => void;
     onAddItem: (newItemValue: string) => void;
 }
 
-export const AddItem: React.FC<Props> = ({ onClose, onAddItem }) => {
+export const AddItem: React.FC<Props> = ({ onAddItem }) => {
+    const [isAddingItem, setIsAddingItem] = useState(false);
     const [newValue, setNewValue] = useState('');
     const trimmedValue = newValue.trim();
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
     useFocusAndSelect({
         ref: textAreaRef,
-        condition: true,
+        condition: isAddingItem,
         value: newValue
     })
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
+        e.stopPropagation();
         if (e.key === "Escape") {
             onClose();
         } else if (e.key === "Enter") {
@@ -43,22 +44,34 @@ export const AddItem: React.FC<Props> = ({ onClose, onAddItem }) => {
         }
     }
 
-    return (
-        <form className={styles.wrapper} onSubmit={addItem} onBlur={handleBlur}>
-            <TextArea
-                value={newValue}
-                onChange={(e) => setNewValue(e.target.value)}
-                onKeyDown={handleKeyDown}
-                ref={textAreaRef}
-                placeholder="Enter something..."
-            />
+    const onClose = () => {
+        setIsAddingItem(false);
+    }
 
-            <Button
-                disabled={!trimmedValue}
-                type='submit'
-            >
-                Add
-            </Button>
-        </form>
+    return (
+        <>
+            {isAddingItem ? (
+                <form className={styles.wrapper} onSubmit={addItem} onBlur={handleBlur}>
+                    <TextArea
+                        value={newValue}
+                        onChange={(e) => setNewValue(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        ref={textAreaRef}
+                        placeholder="Enter something..."
+                    />
+
+                    <Button
+                        disabled={!trimmedValue}
+                        type='submit'
+                    >
+                        Add
+                    </Button>
+                </form>
+            ) : (
+                <Button onClick={() => setIsAddingItem(true)}>
+                    Add item
+                </Button>
+            )}
+        </>
     )
 }
