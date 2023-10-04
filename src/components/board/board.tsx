@@ -15,9 +15,9 @@ interface Props {
 }
 
 export const Board: React.FC<Props> = ({username}) => {
-    const [columns, setColumns] = useState<Record<string, IColumn>>(getColumns());
-    const [cards, setCards] = useState<Record<string, ICard>>(getCards());
-    const [comments, setComments] = useState<Record<string, IComment>>(getComments());
+    const [columns, setColumns] = useState<Record<string, IColumn>>(getColumns);
+    const [cards, setCards] = useState<Record<string, ICard>>(getCards);
+    const [comments, setComments] = useState<Record<string, IComment>>(getComments);
 
     const [activeCardIdPopup, setActiveCardIdPopup] = useState<string | null>(null);
 
