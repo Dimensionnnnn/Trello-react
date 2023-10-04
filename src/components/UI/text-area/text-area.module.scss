@@ -1,0 +1,23 @@
+.textArea {
+    overflow: hidden;
+    text-decoration: none;
+    resize: none;
+
+    border-radius: 8px;
+    font-size: 16px;
+    padding: 10px;
+
+    width: 100%;
+    max-width: 100%;
+    background-color: var(--black-03);
+    color: var(--white-02);
+
+    border: none;
+    outline: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:focus {
+        background-color: lighten(#22272b, 10%);
+        color: darken(#b6c2cf, 10%)
+    }
+}

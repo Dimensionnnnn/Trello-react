@@ -1,0 +1,11 @@
+@mixin hide-scrollbar {
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.root {
+    @include hide-scrollbar;
+    width: 100%;
+    overflow: auto;
+}

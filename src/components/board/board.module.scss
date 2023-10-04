@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    height: 100%;
+    position: relative;
+    overflow-y: auto;
+    outline: none;
+    padding-top: 10px;
+}
+
+.wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    white-space: nowrap;
+
+    display: flex;
+    flex-direction: row;
+
+    min-width: 1200px;
+    width: 100%;
+
+    gap: 40px;
+}
+
+.wrapper > :first-child {
+    margin-left: 40px;
+}
