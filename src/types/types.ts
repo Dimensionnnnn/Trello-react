@@ -15,4 +15,5 @@ export interface Comment {
     cardId: string;
     description: string;
     author: string;
+    createdAt: Date;
 }

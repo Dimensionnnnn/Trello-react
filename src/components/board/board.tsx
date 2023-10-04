@@ -8,7 +8,7 @@ import { Column as IColumn } from "types/types";
 import { Comment as IComment } from "types/types";
 import { PopupCard } from "components/popup-card/popup-card";
 import { v4 as uuidv4 } from "uuid";
-import { initializeStateFromLocalStorage } from "utils/utils";
+import { initializeStateFromLocalStorage } from "utils/init-local-storage";
 import { StorageService } from "services/storage-service";
 
 interface Props {
@@ -113,6 +113,7 @@ export const Board: React.FC<Props> = ({username}) => {
                 cardId: cardId,
                 description: newCardDescription,
                 author: username,
+                createdAt: new Date(),
             }
     
             const updatedComments = {...comments};

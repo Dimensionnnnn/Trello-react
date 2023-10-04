@@ -9,22 +9,21 @@ import { SvgDelete } from "shared/icons/components/delete-svg";
 
 interface Props {
     card: ICard;
+    commentsCount: number;
     onTextChange: (newText: string) => void;
     onCardClick: (cardId: string | null) => void;
     onDeleteCard: (cardId: string) => void;
-    commentsCount: () => number;
 }
 
 export const Card: React.FC<Props> = ({
     card,
+    commentsCount,
     onTextChange,
     onCardClick,
     onDeleteCard,
-    commentsCount,
 }) => {
-    const [activeCardIdEditing, setActiveCardIdEditing] = useState<
-        string | null
-    >(null);
+    const [activeCardIdEditing, setActiveCardIdEditing] = useState<string | null>(null);
+    const hasComments = commentsCount > 0;
 
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -45,7 +44,7 @@ export const Card: React.FC<Props> = ({
     };
 
     return (
-        <article className={styles.container}>
+        <div className={styles.container}>
             <div className={styles.wrapper}>
                 {activeCardIdEditing ? (
                     <TextArea
@@ -80,11 +79,11 @@ export const Card: React.FC<Props> = ({
                 )}
             </div>
 
-            {commentsCount() > 0 && (
+            {hasComments && (
                 <p className={styles.commentsCount}>
-                    Comments: {commentsCount()}
+                    Comments: {commentsCount}
                 </p>
             )}
-        </article>
+        </div>
     );
 };

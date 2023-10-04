@@ -26,7 +26,7 @@ export const CardList: React.FC<Props> = ({
                     onTextChange={(newText: string) => onCardTextChange(card.id, newText)}
                     onCardClick={onCardClick}
                     onDeleteCard={onDeleteCard}
-                    commentsCount={() => getCommentsCountByCardId(card.id)}
+                    commentsCount={getCommentsCountByCardId(card.id)}
                 />
             ))}
         </>

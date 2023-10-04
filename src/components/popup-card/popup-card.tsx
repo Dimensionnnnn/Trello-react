@@ -7,7 +7,8 @@ import { EditableText } from "components/UI/editable-text/editable-text";
 import { SvgClose } from "shared/icons/components/close-svg";
 import styles from "./popup-card.module.scss";
 import { CommentsList } from "components/comments-list/comments-list";
-import { CommentAdd } from "components/comment-add/comment-add";
+import { AddItem } from "components/UI/add-item/add-item";
+import { useState } from "react";
 
 export interface CommentProps {
     [id: string]: Comment;
@@ -15,9 +16,9 @@ export interface CommentProps {
 
 interface Props {
     isOpen: boolean;
-    onClose: () => void;
     card?: Card;
     comments?: CommentProps;
+    onClose: () => void;
     onCardTextChange: (id?: string, newTitle?: string) => void;
     onDescriptionChange: (id?: string, newDescription?: string) => void;
     onAddComment: (newComment?: string, cardId?: string) => void;
@@ -27,15 +28,17 @@ interface Props {
 
 export const PopupCard: React.FC<Props> = ({
     isOpen,
-    onClose,
     card,
     comments,
+    onClose,
     onCardTextChange,
     onDescriptionChange,
     onAddComment,
     onDeleteComment,
     onCommentDescriptionChange,
 }) => {
+    const [isAddingComment, setIsAddingComment] = useState(false);
+
     return (
         <Popup isOpen={isOpen} onClose={onClose}>
             <h2>Карточка</h2>
@@ -53,10 +56,13 @@ export const PopupCard: React.FC<Props> = ({
 
             <h3>Комментарии</h3>
 
-            <CommentAdd
-                cardId={card?.id}
-                onAddComment={onAddComment}
-            />
+            <AddItem
+                isOpen={isAddingComment}
+                onClose={() => setIsAddingComment(false)}
+                onAddItem={(newItemValue) => onAddComment(newItemValue, card?.id)}
+            >
+                <div className={styles.text} onClick={() => setIsAddingComment(true)}>Write your comment...</div>
+            </AddItem>
 
             <CommentsList 
                 comments={comments}
