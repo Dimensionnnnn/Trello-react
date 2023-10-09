@@ -1,17 +1,19 @@
-import { useState} from "react";
 import { WelcomeModal } from "components/welcome-modal/welcome-modal";
 import { Header } from "components/header/header";
 import { Board } from "components/board/board";
 import styles from "assets/global.module.scss";
-import { StorageService } from "services/storage-service";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "redux/store";
+import { updateUsername } from "redux/ducks/username/username-slice";
 
 function App() {
-  const initialUsername = StorageService.getItem<string>('username');
-  const [username, setUsername] = useState(initialUsername);
+
+  const dispatch = useDispatch();
+
+  const username = useSelector((state: RootState) => state.username);
 
   const handleUsernameSubmit = (newUsername: string) => {
-    setUsername(newUsername);
-    StorageService.setItem('username', newUsername);
+    dispatch(updateUsername(newUsername));
   }
 
   return (
@@ -20,7 +22,7 @@ function App() {
         <>
           <div className={styles.container}>
             <Header username={username} />
-            <Board username={username} />
+            <Board />
           </div>
         </>
       ) :

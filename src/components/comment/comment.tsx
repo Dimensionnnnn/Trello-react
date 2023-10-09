@@ -6,17 +6,25 @@ import { TextArea } from "components/UI/text-area/text-area";
 import { Button } from "components/UI/button/button";
 import { SvgEdit } from "shared/icons/components/edit-svg";
 import { SvgDelete } from "shared/icons/components/delete-svg";
+import { useDispatch } from "react-redux";
+import { deleteComment, updateCommentDescription } from "redux/ducks/comments/comments-slice";
 
 interface Props {
     comment: IComment;
-    onDescriptionChange: (newDescription?: string) => void;
-    onDeleteComment: (commentId?: string) => void;
 }
 
-export const Comment: React.FC<Props> = ({comment, onDescriptionChange, onDeleteComment}) => {
+export const Comment: React.FC<Props> = ({comment}) => {
+    const dispatch = useDispatch();
     const [commentIdEditinig, setCommentIdEdit] = useState<string | null>(null);
-
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+    const handleDeleteComment = (commentId: string) => {
+        dispatch(deleteComment(commentId));
+    }
+
+    const handleUpdateCommentDescription = (commentId: string, newDescription: string) => {
+        dispatch(updateCommentDescription({id: commentId, description: newDescription}));
+    }
 
     useFocusAndSelect({
         ref: textAreaRef,
@@ -47,7 +55,7 @@ export const Comment: React.FC<Props> = ({comment, onDescriptionChange, onDelete
                     <TextArea
                         ref={textAreaRef}
                         value={comment.description}
-                        onChange={(e) => onDescriptionChange(e.target.value)}
+                        onChange={(e) => handleUpdateCommentDescription(comment.id, e.target.value)}
                         onBlur={onClose}
                         onKeyDown={handleKeyDown}
                     />
@@ -63,7 +71,7 @@ export const Comment: React.FC<Props> = ({comment, onDescriptionChange, onDelete
                             </Button>
 
                             <Button
-                                onClick={() => onDeleteComment(comment.id)}
+                                onClick={() => handleDeleteComment(comment.id)}
                             >
                                 <SvgDelete/>
                             </Button>

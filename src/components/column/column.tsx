@@ -4,6 +4,11 @@ import styles from "./column.module.scss";
 import { CardList } from "../card-list/card-list";
 import { TitleEdit } from "components/UI/title-edit/title-edit";
 import { AddItem } from "components/UI/add-item/add-item";
+import { useDispatch, useSelector } from "react-redux";
+import { updateColumnTitle } from "redux/ducks/columns/columns-slice";
+import { RootState } from "redux/store";
+import { addCard } from "redux/ducks/cards/cards-slice";
+import { v4 as uuidv4 } from "uuid";
 
 export interface CardProps {
     [id: string]: ICard;
@@ -11,46 +16,47 @@ export interface CardProps {
 
 interface Props {
     id: string;
-    title: string;
-    cards: CardProps;
-    onTitleChange: (newTitle: string) => void;
-    onAddCard: (newCardTitle: string, columnId: string) => void;
-    onDeleteCard: (cardId: string) => void;
-    onCardTextChange: (id: string, newTitle: string) => void;
     onCardClick: (cardId: string | null) => void;
-    getCommentsCountByCardId: (cardId: string) => number;
 }
 
 export const Column: React.FC<Props> = ({
     id,
-    title,
-    cards,
-    onTitleChange,
-    onAddCard,
-    onDeleteCard,
-    onCardTextChange,
     onCardClick,
-    getCommentsCountByCardId
 }) => {
+    const dispatch = useDispatch();
+
+    const handleColumnTitleChange = (newTitle: string) => {
+        dispatch(updateColumnTitle({id, title: newTitle}));
+    }
+
+    const columnTitle = useSelector((state: RootState) => state.columns[id].title);
+
+    const handleAddCard = (newCardTitle: string, columnId: string) => {
+        const newCard: ICard = {
+            id: uuidv4(),
+            columnId: columnId,
+            title: newCardTitle,
+            description: "",
+        }
+        dispatch(addCard(newCard));
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.wrapper}>
                 <div className={styles.header}>
-                    <TitleEdit title={title} onTitleChange={onTitleChange} />
+                    <TitleEdit title={columnTitle} onTitleChange={handleColumnTitleChange} />
                 </div>
 
                 <div className={styles.cards}>
                     <CardList
-                        cards={cards}
-                        onCardTextChange={onCardTextChange}
+                        columnId={id}
                         onCardClick={onCardClick}
-                        onDeleteCard={onDeleteCard}
-                        getCommentsCountByCardId={getCommentsCountByCardId}
                     />
                 </div>
 
                 <AddItem
-                    onAddItem={(newItemValue) => onAddCard(newItemValue, id)}
+                    onAddItem={(newItemValue) => handleAddCard(newItemValue, id)}
                 />
             </div>
         </div>
