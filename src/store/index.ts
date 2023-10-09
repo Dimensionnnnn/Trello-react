@@ -2,9 +2,9 @@ import { configureStore, combineReducers  } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { columnReducer } from 'reducers/column-reducer/column-reducer';
-import { commentReducer } from 'reducers/comment-reducer/comment-reducer';
-import { cardReducer } from 'reducers/card-reducer/card-reducer';
+import cardReducer from 'card/card-slice';
+import columnReducer from 'column/column-slice';
+import commentReducer from 'comment/comment-slice';
 
 const rootReducer = combineReducers({
     column: columnReducer,
