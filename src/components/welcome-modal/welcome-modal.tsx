@@ -1,35 +1,44 @@
 import styles from './welcome-modal.module.scss';
 import { Input } from 'components/UI/input/input';
 import { Button } from 'components/UI/button/button';
-import { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 
 interface Props {
     onSubmit: (username: string) => void;
 }
 
-export const WelcomeModal: React.FC<Props> = ({onSubmit}) => {
-    const [error, setError] = useState('');
-    const handleSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
-    
-        const form = event.target as HTMLFormElement;
-        const formData = new FormData(form);
-    
-        const name = formData.get('welcome-input') as string;
-        const trimmedName = name.trim();
-    
-        if (!trimmedName) {
-            setError('Please enter your name');
-            return;
-        }
+interface FormProps {
+    welcomeInput: string
+}
 
-        onSubmit(name);
+export const WelcomeModal: React.FC<Props> = ({onSubmit}) => {
+    const { handleSubmit, control, formState: { errors } } = useForm<FormProps>();
+
+    const handleOnSubmit = (data: FormProps) => {
+        onSubmit(data.welcomeInput);
     }
 
     return (
         <div className={styles.modal}>
-            <form className={styles.content} onSubmit={handleSubmit}>
-                <Input name='welcome-input' label='Input your name' error={error}/>
+            <form className={styles.content} onSubmit={handleSubmit(handleOnSubmit)} noValidate>
+                <Controller
+                    name='welcomeInput'
+                    control={control}
+                    defaultValue=''
+                    rules={{
+                        validate: (value) => !!value.trim() ? true : 'Please enter your name',
+                    }}
+                    render={({ field }) => (
+                        <Input
+                            label='Enter your name'
+                            name={field.name}
+                            value={field.value}
+                            onChange={field.onChange}
+                            onBlur={field.onBlur}
+                            error={errors.welcomeInput?.message}
+                        />
+                    )}
+                />
                 <Button type='submit'>Submit</Button>
             </form>
         </div>
