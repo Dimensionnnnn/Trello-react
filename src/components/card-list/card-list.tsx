@@ -1,6 +1,7 @@
 import React from "react";
 import { Card } from "components/card/card";
-import { RootState, useAppSelector } from "redux/store";
+import { RootState } from "redux/store";
+import { useAppSelector } from "redux/hooks";
 import { getCardsByColumnId } from "redux/ducks/cards/selectors";
 
 interface Props {

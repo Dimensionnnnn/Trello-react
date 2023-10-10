@@ -2,7 +2,7 @@ import { Column } from "components/column/column";
 import { useState } from "react";
 import styles from "./board.module.scss";
 import { PopupCard } from "components/popup-card/popup-card";
-import { useAppSelector } from "redux/store";
+import { useAppSelector } from "redux/hooks";
 
 export const Board = () => {
     const columns = useAppSelector((state) => state.columns);

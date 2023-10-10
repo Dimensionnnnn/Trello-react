@@ -7,7 +7,7 @@ import { Button } from "components/UI/button/button";
 import { SvgEdit } from "shared/icons/components/edit-svg";
 import { SvgDelete } from "shared/icons/components/delete-svg";
 import { deleteComment, updateCommentDescription } from "redux/ducks/comments/comments-slice";
-import { useAppDispatch } from "redux/store";
+import { useAppDispatch } from "redux/hooks";
 
 interface Props {
     comment: IComment;

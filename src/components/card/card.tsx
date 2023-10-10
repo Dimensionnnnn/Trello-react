@@ -8,7 +8,8 @@ import { SvgEdit } from "shared/icons/components/edit-svg";
 import { SvgDelete } from "shared/icons/components/delete-svg";
 import { deleteCard, updateCardTitle } from "redux/ducks/cards/cards-slice";
 import { getCommentsCountByCardId } from "redux/ducks/comments/selectors";
-import { RootState, useAppDispatch, useAppSelector } from "redux/store";
+import { RootState } from "redux/store";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 
 interface Props {
     card: ICard;

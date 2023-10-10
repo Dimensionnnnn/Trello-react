@@ -2,7 +2,8 @@ import React from "react";
 import { Comment } from "components/comment/comment";
 import styles from "./comments-list.module.scss";
 import { selectCommentsByCardId } from "redux/ducks/comments/selectors";
-import { RootState, useAppSelector } from "redux/store";
+import { RootState } from "redux/store";
+import { useAppSelector } from "redux/hooks";
 
 interface Props {
     cardId?: string;

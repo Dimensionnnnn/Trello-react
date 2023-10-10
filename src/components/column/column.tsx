@@ -5,7 +5,8 @@ import { CardList } from "../card-list/card-list";
 import { TitleEdit } from "components/UI/title-edit/title-edit";
 import { AddItem } from "components/UI/add-item/add-item";
 import { updateColumnTitle } from "redux/ducks/columns/columns-slice";
-import { RootState, useAppDispatch, useAppSelector } from "redux/store";
+import { RootState } from "redux/store";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { addCard } from "redux/ducks/cards/cards-slice";
 import { v4 as uuidv4 } from "uuid";
 

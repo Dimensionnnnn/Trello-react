@@ -7,11 +7,12 @@ import { SvgClose } from "shared/icons/components/close-svg";
 import styles from "./popup-card.module.scss";
 import { CommentsList } from "components/comments-list/comments-list";
 import { AddItem } from "components/UI/add-item/add-item";
-import { RootState, useAppDispatch, useAppSelector } from "redux/store";
+import { RootState } from "redux/store";
 import { getCardById } from "redux/ducks/cards/selectors";
 import { updateCardDescription, updateCardTitle } from "redux/ducks/cards/cards-slice";
 import { v4 as uuidv4 } from "uuid";
 import { addComment } from "redux/ducks/comments/comments-slice";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 
 export interface CommentProps {
     [id: string]: Comment;
