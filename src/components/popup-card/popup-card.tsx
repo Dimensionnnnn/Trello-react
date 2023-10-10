@@ -7,8 +7,7 @@ import { SvgClose } from "shared/icons/components/close-svg";
 import styles from "./popup-card.module.scss";
 import { CommentsList } from "components/comments-list/comments-list";
 import { AddItem } from "components/UI/add-item/add-item";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "redux/store";
+import { RootState, useAppDispatch, useAppSelector } from "redux/store";
 import { getCardById } from "redux/ducks/cards/selectors";
 import { updateCardDescription, updateCardTitle } from "redux/ducks/cards/cards-slice";
 import { v4 as uuidv4 } from "uuid";
@@ -29,10 +28,10 @@ export const PopupCard: React.FC<Props> = ({
     isOpen,
     onClose,
 }) => {
-    const activeCard = useSelector((state: RootState) => getCardById(state, activeCardId ?? ""));
+    const activeCard = useAppSelector((state: RootState) => getCardById(state, activeCardId ?? ""));
+    const username = useAppSelector((state: RootState) => state.username);
 
-    const dispatch = useDispatch();
-    const username = useSelector((state: RootState) => state.username);
+    const dispatch = useAppDispatch();
 
     const handleUpdateCardTitle = (cardId?: string, newTitle?: string) => {
         if (cardId && newTitle) {

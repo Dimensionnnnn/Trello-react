@@ -6,17 +6,17 @@ import { TextArea } from "components/UI/text-area/text-area";
 import { Button } from "components/UI/button/button";
 import { SvgEdit } from "shared/icons/components/edit-svg";
 import { SvgDelete } from "shared/icons/components/delete-svg";
-import { useDispatch } from "react-redux";
 import { deleteComment, updateCommentDescription } from "redux/ducks/comments/comments-slice";
+import { useAppDispatch } from "redux/store";
 
 interface Props {
     comment: IComment;
 }
 
 export const Comment: React.FC<Props> = ({comment}) => {
-    const dispatch = useDispatch();
     const [commentIdEditinig, setCommentIdEdit] = useState<string | null>(null);
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
+    const dispatch = useAppDispatch();
 
     const handleDeleteComment = (commentId: string) => {
         dispatch(deleteComment(commentId));

@@ -4,18 +4,17 @@ import { Card } from "types/types";
 
 const selectCards = (state: RootState) => state.cards;
 
-const selectFilteredCards = (state: RootState, columnId: string) => {
+const selectCardsByColumnId = (state: RootState, columnId: string) => {
     const cards = Object.values(selectCards(state));
     return cards.filter((card: Card) => card.columnId === columnId)
 }
 
 const selectCardById = (state: RootState, cardId: string) => {
-    const cards = Object.values(selectCards(state));
-    return cards.find((card: Card) => card.id === cardId)
+    return state.cards[cardId]
 }
 
-export const selectCardsByColumnId = createSelector(
-    selectFilteredCards,
+export const getCardsByColumnId = createSelector(
+    selectCardsByColumnId,
     (filteredCards: Card[]) => filteredCards
 )
 

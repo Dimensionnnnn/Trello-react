@@ -4,9 +4,8 @@ import styles from "./column.module.scss";
 import { CardList } from "../card-list/card-list";
 import { TitleEdit } from "components/UI/title-edit/title-edit";
 import { AddItem } from "components/UI/add-item/add-item";
-import { useDispatch, useSelector } from "react-redux";
 import { updateColumnTitle } from "redux/ducks/columns/columns-slice";
-import { RootState } from "redux/store";
+import { RootState, useAppDispatch, useAppSelector } from "redux/store";
 import { addCard } from "redux/ducks/cards/cards-slice";
 import { v4 as uuidv4 } from "uuid";
 
@@ -23,13 +22,12 @@ export const Column: React.FC<Props> = ({
     id,
     onCardClick,
 }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
+    const columnTitle = useAppSelector((state: RootState) => state.columns[id].title);
 
     const handleColumnTitleChange = (newTitle: string) => {
         dispatch(updateColumnTitle({id, title: newTitle}));
     }
-
-    const columnTitle = useSelector((state: RootState) => state.columns[id].title);
 
     const handleAddCard = (newCardTitle: string, columnId: string) => {
         const newCard: ICard = {

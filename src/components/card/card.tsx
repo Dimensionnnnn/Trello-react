@@ -6,10 +6,9 @@ import { useFocusAndSelect } from "hooks/useFocusAndSelect";
 import { Button } from "components/UI/button/button";
 import { SvgEdit } from "shared/icons/components/edit-svg";
 import { SvgDelete } from "shared/icons/components/delete-svg";
-import { useDispatch, useSelector } from "react-redux";
 import { deleteCard, updateCardTitle } from "redux/ducks/cards/cards-slice";
 import { getCommentsCountByCardId } from "redux/ducks/comments/selectors";
-import { RootState } from "redux/store";
+import { RootState, useAppDispatch, useAppSelector } from "redux/store";
 
 interface Props {
     card: ICard;
@@ -21,11 +20,10 @@ export const Card: React.FC<Props> = ({
     onCardClick,
 }) => {
     const [activeCardIdEditing, setActiveCardIdEditing] = useState<string | null>(null);
-    const dispatch = useDispatch();
-
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
-
-    const commentsCount = useSelector((state: RootState) => getCommentsCountByCardId(state, card.id));
+    const dispatch = useAppDispatch();
+    
+    const commentsCount = useAppSelector((state: RootState) => getCommentsCountByCardId(state, card.id));
     const hasComments = commentsCount > 0;
 
     const handleDeleteCard = (cardId: string) => {
