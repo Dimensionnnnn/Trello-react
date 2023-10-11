@@ -1,34 +1,27 @@
 import { Button } from "components/UI/button/button";
 import { TextArea } from "components/UI/text-area/text-area"
-import { useFocusAndSelect } from "hooks/useFocusAndSelect";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import styles from "./add-item.module.scss";
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import { validateNotEmptyField } from "redux/ducks/validation";
 
 interface Props {
     onAddItem: (newItemValue: string) => void;
 }
 
-interface FormProps {
+export interface FormProps {
     newItemValue: string;
 }
 
 export const AddItem: React.FC<Props> = ({ onAddItem }) => {
     const [isAddingItem, setIsAddingItem] = useState(false);
-    const textAreaRef = useRef<HTMLTextAreaElement>(null);
-    const { handleSubmit, control, reset, formState: { errors } } = useForm<FormProps>();
+    const { handleSubmit, register, reset, formState: { errors } } = useForm<FormProps>();
 
     const onSubmit = (data: FormProps) => {
         onAddItem(data.newItemValue);
         reset();
         onClose();
     }
-
-    useFocusAndSelect({
-        ref: textAreaRef,
-        condition: isAddingItem,
-        value: ''
-    })
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         e.stopPropagation();
@@ -56,31 +49,14 @@ export const AddItem: React.FC<Props> = ({ onAddItem }) => {
         <>
             {isAddingItem ? (
                 <form className={styles.wrapper} onSubmit={handleSubmit(onSubmit)} onBlur={handleBlur} noValidate>
-                    <Controller
-                        name='newItemValue'
-                        control={control}
-                        defaultValue=''
-                        rules={{
-                            validate: (value) => !!value.trim() ? true : 'Please enter something',
-                        }}
-                        render={({ field }) => (
-                            <>
-                                <TextArea
-                                    value={field.value}
-                                    onChange={field.onChange}
-                                    onKeyDown={handleKeyDown}
-                                    ref={textAreaRef}
-                                    placeholder="Enter something..."
-                                />
-                                {errors.newItemValue && (
-                                    <span className={styles.error}>
-                                        {errors.newItemValue.message}
-                                    </span>
-                                )}
-                            </>
-                        )}
+                    <TextArea
+                        placeholder="Enter something..."
+                        onKeyDown={handleKeyDown}
+                        {...register('newItemValue', {
+                            validate: (value) => validateNotEmptyField(value),
+                        })}
                     />
-
+                    {errors.newItemValue && <span className={styles.error}>{errors.newItemValue.message}</span>}
                     <Button type='submit'>
                         Add
                     </Button>
