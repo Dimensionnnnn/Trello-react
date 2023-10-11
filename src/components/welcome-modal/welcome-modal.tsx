@@ -9,24 +9,25 @@ interface Props {
 }
 
 export interface WelcomeModalFormProps {
-    'Your name': string
+    name: string
 }
 
 export const WelcomeModal: React.FC<Props> = ({onSubmit}) => {
     const { register, handleSubmit, formState: { errors } } = useForm<WelcomeModalFormProps>();
 
     const handleOnSubmit = (data: WelcomeModalFormProps) => {
-        onSubmit(data['Your name']);
+        onSubmit(data.name);
     }
 
     return (
         <div className={styles.modal}>
             <form className={styles.content} onSubmit={handleSubmit(handleOnSubmit)} noValidate>
                 <Input
-                    label='Your name'
-                    register={register}
-                    validate={validateNotEmptyField}
-                    error={errors['Your name']?.message}
+                    label='Enter your name'
+                    {...register('name', {
+                        validate: (value) => validateNotEmptyField(value),
+                    })}
+                    error={errors.name?.message}
                 />
                 <Button type='submit'>Submit</Button>
             </form>
