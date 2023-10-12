@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Comment } from "types/types";
+import { deleteCard } from "../cards/cards-slice";
 
 const initialState: Record<string, Comment> = {};
 
@@ -16,6 +17,16 @@ const commentsSlice = createSlice({
         deleteComment: (state, {payload}: PayloadAction<string>) => {
             delete state[payload];
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(deleteCard, (state, action) => {
+            const cardIdToDelete = action.payload;
+            for (const commentId in state) {
+                if (state[commentId].cardId === cardIdToDelete) {
+                    delete state[commentId];
+                }
+            }
+        })
     }
 })
 
