@@ -6,7 +6,6 @@ import usernameReducer from './ducks/username/username-slice';
 import cardReducer from './ducks/cards/cards-slice';
 import columnReducer from './ducks/columns/columns-slice';
 import commentReducer from './ducks/comments/comments-slice';
-import { deleteCommentsMiddleware } from './middleware';
 
 const rootReducer = combineReducers({
     username: usernameReducer,
@@ -24,7 +23,6 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
     reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(deleteCommentsMiddleware),
 })
 
 export const persistor = persistStore(store);
