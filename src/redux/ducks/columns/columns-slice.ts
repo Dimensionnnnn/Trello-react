@@ -1,18 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Column } from "types/types";
-import { columns } from "data/data";
 
-const initialState: Record<string, Column> = columns;
+const initialState: Record<string, Column> = {};
 
 const columnsSlice = createSlice({
     name: 'columns',
     initialState,
     reducers: {
+        addColumn: (state, {payload}: PayloadAction<Column>) => {
+            state[payload.id] = payload;
+        },
         updateColumnTitle: (state, {payload}: PayloadAction<{ id: string; title: string }>) => {
             state[payload.id].title = payload.title
+        },
+        deleteColumn: (state, {payload}: PayloadAction<string>) => {
+            delete state[payload];
         }
     }
 })
 
-export const { updateColumnTitle } = columnsSlice.actions;
+export const { addColumn, updateColumnTitle, deleteColumn } = columnsSlice.actions;
 export default columnsSlice.reducer;
