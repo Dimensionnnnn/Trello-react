@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Card } from "types/types";
+import { deleteColumn } from "../columns/columns-slice";
 
 const initialState: Record<string, Card> = {};
 
@@ -19,6 +20,14 @@ const cardsSlice = createSlice({
         deleteCard: (state, {payload}: PayloadAction<string>) => {
             delete state[payload];
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(deleteColumn, (state, action) => {
+            const {cardsIds} = action.payload;
+            cardsIds.forEach((cardId) => {
+                delete state[cardId];
+            })
+        })
     }
 })
 

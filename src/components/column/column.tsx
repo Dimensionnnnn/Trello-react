@@ -7,10 +7,10 @@ import { AddItem } from "components/UI/add-item/add-item";
 import { deleteColumn, updateColumnTitle } from "redux/ducks/columns/columns-slice";
 import { RootState } from "redux/store";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { addCard, deleteCard } from "redux/ducks/cards/cards-slice";
+import { addCard } from "redux/ducks/cards/cards-slice";
 import { v4 as uuidv4 } from "uuid";
 import { Button } from "components/UI/button/button";
-import { getCardsByColumnId } from "redux/ducks/cards/selectors";
+import { getCardsIdsByColumnId } from "redux/ducks/cards/selectors";
 
 export interface CardProps {
     [id: string]: ICard;
@@ -27,7 +27,7 @@ export const Column: React.FC<Props> = ({
 }) => {
     const dispatch = useAppDispatch();
     const columnTitle = useAppSelector((state: RootState) => state.columns[id].title);
-    const cardsByColumnId = useAppSelector((state: RootState) => getCardsByColumnId(state, id));
+    const cardsIdsByColumnId = useAppSelector((state: RootState) => getCardsIdsByColumnId(state, id));
 
     const handleColumnTitleChange = (newTitle: string) => {
         dispatch(updateColumnTitle({id, title: newTitle}));
@@ -44,11 +44,7 @@ export const Column: React.FC<Props> = ({
     }
 
     const handleDeleteColumn = (columnId: string) => {
-        cardsByColumnId.forEach((card) => {
-            dispatch(deleteCard(card.id));
-        })
-
-        dispatch(deleteColumn(columnId));
+        dispatch(deleteColumn({columnId: columnId, cardsIds: cardsIdsByColumnId}));
     }
 
     return (
