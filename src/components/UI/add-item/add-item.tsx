@@ -1,9 +1,10 @@
 import { Button } from "components/UI/button/button";
 import { TextArea } from "components/UI/text-area/text-area"
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styles from "./add-item.module.scss";
 import { useForm } from 'react-hook-form';
 import { validateNotEmptyField } from "redux/ducks/validation";
+import { useFocusAndSelect } from "hooks/useFocusAndSelect";
 
 interface Props {
     onAddItem: (newItemValue: string) => void;
@@ -16,6 +17,14 @@ export interface FormProps {
 export const AddItem: React.FC<Props> = ({ onAddItem }) => {
     const [isAddingItem, setIsAddingItem] = useState(false);
     const { handleSubmit, register, reset, formState: { errors } } = useForm<FormProps>();
+    const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+    const { ref } = register('newItemValue')
+
+    useFocusAndSelect({
+        ref: textAreaRef,
+        condition: isAddingItem,
+        value: ''
+    })
 
     const onSubmit = (data: FormProps) => {
         onAddItem(data.newItemValue);
@@ -55,6 +64,10 @@ export const AddItem: React.FC<Props> = ({ onAddItem }) => {
                         {...register('newItemValue', {
                             validate: (value) => validateNotEmptyField(value),
                         })}
+                        ref = {(element) => {
+                            ref(element)
+                            textAreaRef.current = element
+                        }}
                     />
                     {errors.newItemValue && <span className={styles.error}>{errors.newItemValue.message}</span>}
                     <Button type='submit'>
