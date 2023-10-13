@@ -22,7 +22,15 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-    reducer: persistedReducer,
+    reducer: (state, action) => {
+        if (action.type === 'username/deleteUsername') {
+            console.log('clearing store');
+            storage.removeItem('persist:root')
+            state = {} as RootState
+        }
+
+        return persistedReducer(state, action);
+    }
 })
 
 export const persistor = persistStore(store);

@@ -8,9 +8,12 @@ const usernameSlice = createSlice({
     reducers: {
         updateUsername: (state, {payload}: PayloadAction<string>) => {
             return payload
+        },
+        deleteUsername: (state, {payload}: PayloadAction<string>) => {
+            return ""
         }
     }
 })
 
-export const { updateUsername } = usernameSlice.actions;
+export const { updateUsername, deleteUsername } = usernameSlice.actions;
 export default usernameSlice.reducer;
