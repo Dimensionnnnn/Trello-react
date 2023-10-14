@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./header.module.scss";
 import { Button } from "components/UI/button/button";
-import { logout } from "redux/ducks/username/username-slice";
+import { logout } from "redux/action";
 import { useAppDispatch } from "redux/hooks";
 
 interface Props {

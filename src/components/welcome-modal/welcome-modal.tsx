@@ -3,6 +3,7 @@ import { Input } from 'components/UI/input/input';
 import { Button } from 'components/UI/button/button';
 import { useForm } from 'react-hook-form';
 import { validateNotEmptyField } from 'redux/ducks/validation';
+import React from 'react';
 
 interface Props {
     onSubmit: (username: string) => void;

@@ -21,3 +21,5 @@ export const Input = forwardRef<HTMLInputElement, Props>(({className, label, err
         </div>
     )
 })
+
+Input.displayName = 'Input'

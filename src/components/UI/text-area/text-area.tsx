@@ -12,3 +12,5 @@ export const TextArea = forwardRef<HTMLTextAreaElement, Props>((props, ref) => {
         <textarea ref={ref} className={combinedClassNames} {...props}/>
     )
 })
+
+TextArea.displayName = 'TextArea'

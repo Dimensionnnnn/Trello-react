@@ -13,6 +13,7 @@ import { updateCardDescription, updateCardTitle } from "redux/ducks/cards/cards-
 import { v4 as uuidv4 } from "uuid";
 import { addComment } from "redux/ducks/comments/comments-slice";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
+import React from "react";
 
 export interface CommentProps {
     [id: string]: Comment;

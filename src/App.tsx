@@ -5,6 +5,7 @@ import styles from "assets/global.module.scss";
 import { RootState } from "redux/store";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { updateUsername } from "redux/ducks/username/username-slice";
+import React from "react";
 
 function App() {
   const dispatch = useAppDispatch();

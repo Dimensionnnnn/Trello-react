@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { v4 as uuidv4 } from "uuid";
 import { addColumn } from "redux/ducks/columns/columns-slice";
 import { AddItem } from "components/UI/add-item/add-item";
+import React from "react";
 
 export const Board = () => {
     const columns = useAppSelector((state) => state.columns);
@@ -31,13 +32,13 @@ export const Board = () => {
                         onCardClick={setActiveCardIdPopup}
                     />
                 ))}
+                <div className={styles.addColumn}>
+                    <h2 className={styles.title}>Add new column</h2>
+                    <AddItem
+                        onAddItem={(newItemValue) => handleAddColumn(newItemValue)}
+                    />
+                </div>
             </section>
-            <div className={styles.footer}>
-                <h2 className={styles.title}>Add new column</h2>
-                <AddItem
-                    onAddItem={(newItemValue) => handleAddColumn(newItemValue)}
-                />
-            </div>
             <PopupCard
                 activeCardId={activeCardIdPopup}
                 isOpen={!!activeCardIdPopup}
