@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { columns } from "data/data";
-import { Column } from "types/types";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { columns } from 'data/data';
+import { Column } from 'types/types';
 
 interface DeleteColumnPayload {
     columnId: string;
@@ -13,18 +13,25 @@ const columnsSlice = createSlice({
     name: 'columns',
     initialState,
     reducers: {
-        addColumn: (state, {payload}: PayloadAction<Column>) => {
+        addColumn: (state, { payload }: PayloadAction<Column>) => {
             state[payload.id] = payload;
         },
-        updateColumnTitle: (state, {payload}: PayloadAction<{ id: string; title: string }>) => {
-            state[payload.id].title = payload.title
+        updateColumnTitle: (
+            state,
+            { payload }: PayloadAction<{ id: string; title: string }>,
+        ) => {
+            state[payload.id].title = payload.title;
         },
-        deleteColumn: (state, {payload}: PayloadAction<DeleteColumnPayload>) => {
+        deleteColumn: (
+            state,
+            { payload }: PayloadAction<DeleteColumnPayload>,
+        ) => {
             const { columnId } = payload;
             delete state[columnId];
-        }
-    }
-})
+        },
+    },
+});
 
-export const { addColumn, updateColumnTitle, deleteColumn } = columnsSlice.actions;
+export const { addColumn, updateColumnTitle, deleteColumn } =
+    columnsSlice.actions;
 export default columnsSlice.reducer;
