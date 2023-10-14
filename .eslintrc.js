@@ -1,31 +1,25 @@
 module.exports = {
-    "env": {
-        "browser": true,
-        "es2021": true
-    },
-    "extends": "plugin:react/recommended",
-    "overrides": [
-        {
-            "env": {
-                "node": true
+    extends: ['react-app', 'plugin:prettier/recommended'],
+    plugins: ['prettier'],
+    rules: {
+        'no-console': 'warn',
+        'prettier/prettier': [
+            'error',
+            {
+                endOfLine: 'auto',
             },
-            "files": [
-                ".eslintrc.{js,cjs}"
-            ],
-            "parserOptions": {
-                "sourceType": "script"
-            }
-        }
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaVersion": "latest",
-        "sourceType": "module"
+        ],
+        'import/order': [
+            'error',
+            {
+                groups: ['builtin', 'external', 'internal'],
+                pathGroups: [
+                    { pattern: 'react', group: 'external', position: 'before' },
+                ],
+                pathGroupsExcludedImportTypes: ['react'],
+                'newlines-between': 'always',
+                alphabetize: { order: 'asc', caseInsensitive: true },
+            },
+        ],
     },
-    "plugins": [
-        "@typescript-eslint",
-        "react"
-    ],
-    "rules": {
-    }
-}
+};

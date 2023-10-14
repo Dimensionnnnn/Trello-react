@@ -9,7 +9,7 @@ const usernameSlice = createSlice({
     reducers: {
         updateUsername: (state, { payload }: PayloadAction<string>) => {
             return payload;
-        }
+        },
     },
 });
 
