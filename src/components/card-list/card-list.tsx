@@ -1,33 +1,23 @@
-import React from "react";
-import { Card } from "components/card/card";
-import { Card as ICard } from "types/types";
+import React from 'react';
+
+import { Card } from 'components/card/card';
+import { getCardsByColumnId } from 'redux/ducks/cards/selectors';
+import { useAppSelector } from 'redux/hooks';
+import { RootState } from 'redux/store';
 
 interface Props {
-    cards: Record<string, ICard>;
-    onCardTextChange: (id: string, newTitle: string) => void;
+    columnId: string;
     onCardClick: (cardId: string | null) => void;
-    onDeleteCard: (cardId: string) => void;
-    getCommentsCountByCardId: (cardId: string) => number;
 }
 
-export const CardList: React.FC<Props> = ({
-    cards,
-    onCardTextChange,
-    onCardClick,
-    onDeleteCard,
-    getCommentsCountByCardId
-}) => {
+export const CardList: React.FC<Props> = ({ columnId, onCardClick }) => {
+    const cards = useAppSelector((state: RootState) =>
+        getCardsByColumnId(state, columnId),
+    );
     return (
         <>
-            {Object.values(cards).map((card) => (
-                <Card
-                    key={card.id}
-                    card={card}
-                    onTextChange={(newText: string) => onCardTextChange(card.id, newText)}
-                    onCardClick={onCardClick}
-                    onDeleteCard={onDeleteCard}
-                    commentsCount={getCommentsCountByCardId(card.id)}
-                />
+            {cards.map((card) => (
+                <Card key={card.id} card={card} onCardClick={onCardClick} />
             ))}
         </>
     );

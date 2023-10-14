@@ -1,31 +1,42 @@
-import { TextArea } from "components/UI/text-area/text-area";
-import React, { useRef, useState } from "react";
-import styles from "./card.module.scss";
-import { Card as ICard } from "types/types";
-import { useFocusAndSelect } from "hooks/useFocusAndSelect";
-import { Button } from "components/UI/button/button";
-import { SvgEdit } from "shared/icons/components/edit-svg";
-import { SvgDelete } from "shared/icons/components/delete-svg";
+import React, { useRef, useState } from 'react';
+
+import { Button } from 'components/UI/button/button';
+import { TextArea } from 'components/UI/text-area/text-area';
+import { useFocusAndSelect } from 'hooks/useFocusAndSelect';
+import { deleteCard, updateCardTitle } from 'redux/ducks/cards/cards-slice';
+import { getCommentsCountByCardId } from 'redux/ducks/comments/selectors';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { RootState } from 'redux/store';
+import { SvgDelete } from 'shared/icons/components/delete-svg';
+import { SvgEdit } from 'shared/icons/components/edit-svg';
+import { Card as ICard } from 'types/types';
+
+import styles from './card.module.scss';
 
 interface Props {
     card: ICard;
-    commentsCount: number;
-    onTextChange: (newText: string) => void;
     onCardClick: (cardId: string | null) => void;
-    onDeleteCard: (cardId: string) => void;
 }
 
-export const Card: React.FC<Props> = ({
-    card,
-    commentsCount,
-    onTextChange,
-    onCardClick,
-    onDeleteCard,
-}) => {
-    const [activeCardIdEditing, setActiveCardIdEditing] = useState<string | null>(null);
+export const Card: React.FC<Props> = ({ card, onCardClick }) => {
+    const [activeCardIdEditing, setActiveCardIdEditing] = useState<
+        string | null
+    >(null);
+    const textAreaRef = useRef<HTMLTextAreaElement>(null);
+    const dispatch = useAppDispatch();
+
+    const commentsCount = useAppSelector((state: RootState) =>
+        getCommentsCountByCardId(state, card.id),
+    );
     const hasComments = commentsCount > 0;
 
-    const textAreaRef = useRef<HTMLTextAreaElement>(null);
+    const handleDeleteCard = (cardId: string) => {
+        dispatch(deleteCard(cardId));
+    };
+
+    const handleUpdateCardTitle = (cardId: string, newTitle: string) => {
+        dispatch(updateCardTitle({ id: cardId, title: newTitle }));
+    };
 
     useFocusAndSelect({
         ref: textAreaRef,
@@ -38,7 +49,7 @@ export const Card: React.FC<Props> = ({
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === "Enter" || e.key === "Escape") {
+        if (e.key === 'Enter' || e.key === 'Escape') {
             setActiveCardIdEditing(null);
         }
     };
@@ -51,7 +62,9 @@ export const Card: React.FC<Props> = ({
                         key={card.id}
                         ref={textAreaRef}
                         value={card.title}
-                        onChange={(e) => onTextChange(e.target.value)}
+                        onChange={(e) =>
+                            handleUpdateCardTitle(card.id, e.target.value)
+                        }
                         onBlur={handleBlur}
                         onKeyDown={handleKeyDown}
                     />
@@ -71,7 +84,7 @@ export const Card: React.FC<Props> = ({
                                 <SvgEdit />
                             </Button>
 
-                            <Button onClick={() => onDeleteCard(card.id)}>
+                            <Button onClick={() => handleDeleteCard(card.id)}>
                                 <SvgDelete />
                             </Button>
                         </div>

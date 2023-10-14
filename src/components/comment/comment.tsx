@@ -1,43 +1,64 @@
-import React, {useState, useRef} from "react";
-import { Comment as IComment } from "types/types";
-import styles from "./comment.module.scss";
-import { useFocusAndSelect } from "hooks/useFocusAndSelect";
-import { TextArea } from "components/UI/text-area/text-area";
-import { Button } from "components/UI/button/button";
-import { SvgEdit } from "shared/icons/components/edit-svg";
-import { SvgDelete } from "shared/icons/components/delete-svg";
+import React, { useState, useRef } from 'react';
+
+import { Button } from 'components/UI/button/button';
+import { TextArea } from 'components/UI/text-area/text-area';
+import { useFocusAndSelect } from 'hooks/useFocusAndSelect';
+import {
+    deleteComment,
+    updateCommentDescription,
+} from 'redux/ducks/comments/comments-slice';
+import { useAppDispatch } from 'redux/hooks';
+import { SvgDelete } from 'shared/icons/components/delete-svg';
+import { SvgEdit } from 'shared/icons/components/edit-svg';
+import { Comment as IComment } from 'types/types';
+
+import styles from './comment.module.scss';
 
 interface Props {
     comment: IComment;
-    onDescriptionChange: (newDescription?: string) => void;
-    onDeleteComment: (commentId?: string) => void;
 }
 
-export const Comment: React.FC<Props> = ({comment, onDescriptionChange, onDeleteComment}) => {
+export const Comment: React.FC<Props> = ({ comment }) => {
     const [commentIdEditinig, setCommentIdEdit] = useState<string | null>(null);
-
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
+    const dispatch = useAppDispatch();
+
+    const handleDeleteComment = (commentId: string) => {
+        dispatch(deleteComment(commentId));
+    };
+
+    const handleUpdateCommentDescription = (
+        commentId: string,
+        newDescription: string,
+    ) => {
+        dispatch(
+            updateCommentDescription({
+                id: commentId,
+                description: newDescription,
+            }),
+        );
+    };
 
     useFocusAndSelect({
         ref: textAreaRef,
         condition: commentIdEditinig === comment.id,
-        value: comment.description
-    })
-    
+        value: comment.description,
+    });
+
     const handleKeyDown = (e: React.KeyboardEvent) => {
         e.stopPropagation();
-        if (e.key === "Enter" || e.key === "Escape") {
+        if (e.key === 'Enter' || e.key === 'Escape') {
             onClose();
         }
-    }
+    };
 
     const onClose = () => {
         setCommentIdEdit(null);
-    }
+    };
 
     const onClick = () => {
         setCommentIdEdit(comment.id);
-    }
+    };
 
     return (
         <>
@@ -47,7 +68,12 @@ export const Comment: React.FC<Props> = ({comment, onDescriptionChange, onDelete
                     <TextArea
                         ref={textAreaRef}
                         value={comment.description}
-                        onChange={(e) => onDescriptionChange(e.target.value)}
+                        onChange={(e) =>
+                            handleUpdateCommentDescription(
+                                comment.id,
+                                e.target.value,
+                            )
+                        }
                         onBlur={onClose}
                         onKeyDown={handleKeyDown}
                     />
@@ -56,21 +82,19 @@ export const Comment: React.FC<Props> = ({comment, onDescriptionChange, onDelete
                         <p className={styles.text}>{comment.description}</p>
 
                         <div>
-                            <Button
-                                onClick={onClick}
-                            >
-                                <SvgEdit/>
+                            <Button onClick={onClick}>
+                                <SvgEdit />
                             </Button>
 
                             <Button
-                                onClick={() => onDeleteComment(comment.id)}
+                                onClick={() => handleDeleteComment(comment.id)}
                             >
-                                <SvgDelete/>
+                                <SvgDelete />
                             </Button>
                         </div>
                     </>
                 )}
             </div>
         </>
-    )
-}
+    );
+};

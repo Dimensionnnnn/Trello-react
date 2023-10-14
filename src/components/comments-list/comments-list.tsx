@@ -1,28 +1,32 @@
-import React from "react";
-import { Comment } from "components/comment/comment";
-import { Comment as IComment } from "types/types";
-import styles from "./comments-list.module.scss";
+import React from 'react';
+
+import { Comment } from 'components/comment/comment';
+import { selectCommentsByCardId } from 'redux/ducks/comments/selectors';
+import { useAppSelector } from 'redux/hooks';
+import { RootState } from 'redux/store';
+
+import styles from './comments-list.module.scss';
 
 interface Props {
-    comments?: Record<string, IComment>;
-    onDescriptionChange: (commentId?: string, newDescription?: string) => void;
-    onDeleteComment: (commentId?: string) => void;
+    cardId?: string;
 }
 
-export const CommentsList: React.FC<Props> = ({comments, onDescriptionChange, onDeleteComment}) => {
+export const CommentsList: React.FC<Props> = ({ cardId }) => {
+    const comments = useAppSelector((state: RootState) =>
+        selectCommentsByCardId(state, cardId ?? ''),
+    );
     const sortedComments = comments
-        ? Object.values(comments).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        ? Object.values(comments).sort(
+              (a, b) =>
+                  new Date(b.createdAt).getTime() -
+                  new Date(a.createdAt).getTime(),
+          )
         : [];
     return (
         <div className={styles.root}>
             {sortedComments.map((comment) => (
-                <Comment
-                    key={comment.id}
-                    comment={comment}
-                    onDescriptionChange={(newDescription?: string) => onDescriptionChange(comment?.id, newDescription)}
-                    onDeleteComment={(commentId?: string) => onDeleteComment(commentId)}
-                />
+                <Comment key={comment.id} comment={comment} />
             ))}
         </div>
-    )
-}
+    );
+};

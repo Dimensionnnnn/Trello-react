@@ -1,5 +1,5 @@
 export class StorageService {
-    static getItem<T>(key: string):T | null {
+    static getItem<T>(key: string): T | null {
         try {
             const item = localStorage.getItem(key);
             return item ? JSON.parse(item) : null;

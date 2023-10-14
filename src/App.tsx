@@ -1,33 +1,36 @@
-import { useState} from "react";
-import { WelcomeModal } from "components/welcome-modal/welcome-modal";
-import { Header } from "components/header/header";
-import { Board } from "components/board/board";
-import styles from "assets/global.module.scss";
-import { StorageService } from "services/storage-service";
+import React from 'react';
+
+import styles from 'assets/global.module.scss';
+import { Board } from 'components/board/board';
+import { Header } from 'components/header/header';
+import { WelcomeModal } from 'components/welcome-modal/welcome-modal';
+import { updateUsername } from 'redux/ducks/username/username-slice';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { RootState } from 'redux/store';
 
 function App() {
-  const initialUsername = StorageService.getItem<string>('username');
-  const [username, setUsername] = useState(initialUsername);
+    const dispatch = useAppDispatch();
 
-  const handleUsernameSubmit = (newUsername: string) => {
-    setUsername(newUsername);
-    StorageService.setItem('username', newUsername);
-  }
+    const username = useAppSelector((state: RootState) => state.username);
 
-  return (
-    <>
-      {username ? (
+    const handleUsernameSubmit = (newUsername: string) => {
+        dispatch(updateUsername(newUsername));
+    };
+
+    return (
         <>
-          <div className={styles.container}>
-            <Header username={username} />
-            <Board username={username} />
-          </div>
+            {username ? (
+                <>
+                    <div className={styles.container}>
+                        <Header username={username} />
+                        <Board />
+                    </div>
+                </>
+            ) : (
+                <WelcomeModal onSubmit={handleUsernameSubmit} />
+            )}
         </>
-      ) :
-        <WelcomeModal onSubmit={handleUsernameSubmit}/>
-      }
-    </>
-  );
+    );
 }
 
 export default App;
