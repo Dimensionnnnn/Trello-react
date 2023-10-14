@@ -1,6 +1,7 @@
 import { configureStore, combineReducers  } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { logout } from './ducks/username/username-slice';
 
 import usernameReducer from './ducks/username/username-slice';
 import cardReducer from './ducks/cards/cards-slice';
@@ -23,10 +24,9 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
     reducer: (state, action) => {
-        if (action.type === 'username/deleteUsername') {
-            console.log('clearing store');
+        if (action.type === logout.type) {
             storage.removeItem('persist:root')
-            state = {} as RootState
+            return state = {} as RootState
         }
 
         return persistedReducer(state, action);

@@ -7,13 +7,15 @@ const usernameSlice = createSlice({
     initialState,
     reducers: {
         updateUsername: (state, {payload}: PayloadAction<string>) => {
+            state = payload
             return payload
         },
-        deleteUsername: (state, {payload}: PayloadAction<string>) => {
+        logout: (state) => {
+            state = ""
             return ""
         }
     }
 })
 
-export const { updateUsername, deleteUsername } = usernameSlice.actions;
+export const { updateUsername, logout } = usernameSlice.actions;
 export default usernameSlice.reducer;
